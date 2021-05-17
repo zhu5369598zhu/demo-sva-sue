@@ -1,0 +1,125 @@
+<template>
+  <div class="common-device-tree">
+    <el-form :inline="true" @keyup.enter.native="getDeviceList()">
+      <div class="search">
+        <el-input v-model="deviceName" size="mini">
+          <el-button
+            slot="append"
+            icon="el-icon-search"
+            @click="getDeviceList()"
+          ></el-button>
+        </el-input>
+      </div>
+    </el-form>
+    <el-tree
+      :data="deviceList"
+      :props="deviceTreeProps"
+      node-key="id"
+      :indent="12"
+      ref="tree"
+      show-checkbox
+      @current-change="selectTreeCurrentChangeHandle"
+      :default-expand-all="expendTree"
+      :highlight-current="true"
+      :expand-on-click-node="false"
+    >
+      <span class="custom-tree-node" slot-scope="{ node, data }">
+        <span v-if="data.type === 'device'">
+          <icon-svg
+            name="shezhi"
+            style="font-size: 14px; vertical-align: middle"
+          ></icon-svg
+          ><span>&nbsp;</span
+          ><span style="font-size: 12px; vertical-align: middle"
+            >{{ node.label }}[{{ data.code }}]</span
+          >
+        </span>
+        <span v-if="data.type === 'dept'">
+          {{ node.label }}
+        </span>
+      </span>
+    </el-tree>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      expendTree: true,
+      deviceName: "",
+      deviceTreeProps: {
+        label: "lable",
+        children: "children",
+      },
+    };
+  },
+  props: ["lineId"],
+  components: {},
+  created() {
+    this.getDeviceList(this.lineId);
+  },
+  methods: {
+    // 获取数据列表
+    getDeviceList(panZoneId) {
+      this.$http({
+        url: this.$http.adornUrl(`/inspection/device/trees`),
+        method: "get",
+        params: this.$http.adornParams({
+          deviceName: this.deviceName,
+          panZoneId: panZoneId,
+        }),
+      }).then(({ data }) => {
+        console.log(data);
+        this.deviceList = data.deviceTree;
+        this.expendTree = true;
+        console.log(this.expendTree);
+      });
+    },
+    // 部门树选中
+    selectTreeCurrentChangeHandle(data, node) {
+      this.deptId = data.id;
+      this.$emit("TreeSelectEvent", data);
+    },
+  },
+  computed: {
+    deviceList: {
+      get() {
+        return this.$store.state.deptDevice.deviceList;
+      },
+      set(val) {
+        this.$store.commit("deptDevice/updateDeviceList", val);
+      },
+    },
+  },
+};
+</script>
+
+<style>
+.common-device-tree {
+  min-height: 300px;
+  border: 1px solid #ebeef5;
+}
+.search {
+  width: 100%;
+  border-bottom: 1px solid #ebeef5;
+  padding: 5px;
+}
+.el-tree-node:focus > .el-tree-node__content {
+  background-color: rgb(231, 247, 251);
+}
+.title {
+  display: block;
+  height: 46px;
+  padding: 10px;
+  color: #909399;
+  font-size: 14px;
+}
+.common-device-tree .el-form-item {
+  margin-bottom: 0px;
+}
+
+.device {
+  background-color: rgb(231, 247, 251);
+}
+</style>
