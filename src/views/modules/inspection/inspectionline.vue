@@ -521,6 +521,8 @@
   import ZoneBindAddOrUpdate from './zonebind-add-or-update'
   import ViewPublish from './inspectionlinepublish'
   import splitPane from '@/components/split-pane'
+
+  var lock = false;//修改发布计划防重复提交锁
   export default {
     data () {
       return {
@@ -1202,12 +1204,16 @@
           this.$alert('请选择线路')
           return
         }
+        if(lock){
+          return
+        }
         if (this.publishName === '修改计划') {
           this.$confirm(`确定将线路由已发布状态改为编操状态作?`, '提示', {
             confirmButtonText: '确定',
             cancelButtonText: '取消',
             type: 'warning'
           }).then(() => {
+            lock = true;
             this.$http({
               url: this.$http.adornUrl('/inspection/inspectionline/update'),
               method: 'post',
@@ -1236,11 +1242,13 @@
               } else {
                 this.$message.error(data.msg)
               }
+              lock = false;
             })
           })
         }
 
         if (this.publishName === '发布计划') {
+          lock = true;
           this.$http({
             url: this.$http.adornUrl(`/inspection/inspectionline/publish/${this.lineForm.lineId}`),
             method: 'post'
@@ -1266,6 +1274,7 @@
             } else {
               this.$message.error(data.msg)
             }
+             lock = false;
           })
         }
       },
