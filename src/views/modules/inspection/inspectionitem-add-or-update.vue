@@ -15,18 +15,6 @@
         <el-col :span="3">
           <span>&nbsp;</span>
         </el-col>
-        <el-col :span="10">
-          <el-form-item label="检时状态" prop="inspectionStatus">
-            <el-select v-model="dataForm.inspectionStatus" placeholder="检时状态" clearable style="width:155px;" size="mini">
-              <el-option
-                v-for="item in inspectionStatusList"
-                :key="item.id"
-                :label="item.name"
-                :value="item.id">
-              </el-option>
-            </el-select>
-          </el-form-item>
-        </el-col>
       </el-row>
       <el-row>
         <el-col :span="10">
@@ -167,7 +155,6 @@
         unitList: [],
         inspectionUnitList: [],
         inspectionTypeList: [],
-        inspectionStatusList: [],
         frequencyList: [],
         precisionList: [],
         extraSettingVisible: false,
@@ -209,9 +196,6 @@
           ],
           inspectionType: [
             { required: true, message: '巡检类型不能为空', trigger: 'change' }
-          ],
-          inspectionStatus: [
-            { required: true, message: '检时状态不能为空', trigger: 'change' }
           ],
           downdownLimit: [
             { required: false, trigger: 'blur', validator: this.validateDowndownLimit }
@@ -326,17 +310,6 @@
           }).then(({data}) => {
             this.inspectionTypeList = data.list
             console.log('inspectionTypeList %o', this.inspectionTypeList)
-          })
-        }
-      },
-      getInspectionStatusList () {
-        if (this.inspectionStatusList <= 0) {
-          this.$http({
-            url: this.$http.adornUrl('/setting/inspectionstatus/list'),
-            method: 'get',
-            params: this.$http.adornParams()
-          }).then(({data}) => {
-            this.inspectionStatusList = data.page.list
           })
         }
       },
