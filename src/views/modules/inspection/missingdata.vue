@@ -37,17 +37,6 @@
           <el-button size="mini" @click="exportExcelHandle()">导出</el-button>
         </el-form-item>
       </el-form>
-      <el-tabs type="border-card" value="chart" ref="tabs" @tab-click="handleChange">
-      <el-tab-pane label="图表" name="chart" actived="true">
-        <div v-show="hasData===true&&chartType==='chartbar'" id="chartbar" :style="{ 'height': chartHeight + 'px' }">
-          <component  :is="chartType" ref="chartbar" :category="category" :legend="legend" :series="series" title="漏检统计图表"></component>
-        </div>
-        <div v-show="hasData===true&&chartType==='chartpie'" id="chartpie" :style="{ 'height': chartHeight + 'px' }">
-          <component  :is="chartType" ref="chartpie" :legend="legend" :series="series" title="漏检统计图表"></component>
-        </div>
-        <div class="no-data" align="center" v-show="hasData===false" :style="{ 'height': chartHeight + 'px' }">暂无数据</div>
-      </el-tab-pane>
-      <el-tab-pane label="数据" name="data">
         <div class="show-data">
           <el-table
             ref="table"
@@ -58,6 +47,7 @@
             @selection-change="selectionChangeHandle"
             :cell-style="cellStyle"
             :row-style="rowStyle"
+            height = 700
             style="width: 100%;">
             <el-table-column
                 type="index"
@@ -139,7 +129,6 @@
             layout="total, sizes, prev, pager, next, jumper">
           </el-pagination>
         </div>
-      </el-tab-pane>
     </el-tabs>
   </div>
   </div>
@@ -151,9 +140,6 @@
 
 <script>
   import { formatDate } from '@/utils'
-  import chartbar from '@/components/charts/bar2'
-  import chartline from '@/components/charts/line'
-  import chartpie from '@/components/charts/pie-cake'
   import linetree from '@/components/only-line-tree'
   import splitPane from '@/components/split-pane'
   export default {
@@ -192,9 +178,6 @@
       }
     },
     components: {
-      chartbar,
-      chartpie,
-      chartline,
       linetree,
       splitPane
     },
@@ -315,7 +298,6 @@
             } else {
               this.hasData = false
             }
-            this.drawChart()
           } else {
             this.$message.error(data.msg)
           }
@@ -326,7 +308,6 @@
         this.category = []
         this.series = []
         this.getDataList()
-        this.getStatisticsByDate()
       },
       handleDeptSelect (val) {
         this.type = val.type
@@ -341,20 +322,6 @@
         }
         this.pageIndex = 1
         this.getChartData()
-      },
-      drawChart () {
-        if (this.hasData === true) {
-          if (this.chartType === 'chartbar') {
-            this.$nextTick(() => {
-              this.$refs.chartbar.initChart(this.chartType)
-            })
-          }
-          if (this.chartType === 'chartpie') {
-            this.$nextTick(() => {
-              this.$refs.chartpie.initChart(this.chartType)
-            })
-          }
-        }
       },
       exportToExcel (list) {
         this.downloadLoading = true
