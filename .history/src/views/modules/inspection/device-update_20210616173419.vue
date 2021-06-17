@@ -333,7 +333,7 @@
                       ></el-switch>
                     </el-form-item>
                   </el-col>
-                  <el-col :span="8">
+                  <el-col :span="6">
                     <el-form-item label="看板显示:" prop="isShowDashboard">
                       <el-switch
                         v-model="dataForm.isShowDashboard"
