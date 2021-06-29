@@ -407,7 +407,7 @@
       // 查询用户
       getUserDataList () {
         this.$http({
-          url: this.$http.adornUrl('/sys/user/lists'),
+          url: this.$http.adornUrl('/sys/user/list'),
           method: 'get',
           params: this.$http.adornParams({
             'page': this.pageIndex,

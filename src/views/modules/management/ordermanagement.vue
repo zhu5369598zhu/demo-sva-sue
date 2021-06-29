@@ -1059,7 +1059,7 @@
       // 查询部门
       getDeptDataList () {
         this.$http({
-          url: this.$http.adornUrl('/sys/dept/list'),
+          url: this.$http.adornUrl('/sys/dept/lists'),
           method: 'get',
           params: this.$http.adornParams({'name': this.deptFrom.name})
         }).then(({data}) => {
@@ -1093,7 +1093,7 @@
       // 查询用户
       getUserDataList () {
         this.$http({
-          url: this.$http.adornUrl('/sys/user/lists'),
+          url: this.$http.adornUrl('/sys/user/list'),
           method: 'get',
           params: this.$http.adornParams({
             'page': this.pageIndex,

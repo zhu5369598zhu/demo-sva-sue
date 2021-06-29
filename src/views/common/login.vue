@@ -3,13 +3,13 @@
     <div class="site-content__wrapper">
       <div class="site-content">
         <div class="brand-info">
-          <!-- <span class="brand-info__text">HcoAladin智慧云点巡检管理系统</span> -->
+          <span class="brand-info__text">HcoAladin智慧云点巡检管理系统</span>
         </div>
         <div class="login-main">
           <el-form :model="dataForm" :rules="dataRule" ref="dataForm" @keyup.enter.native="dataFormSubmit()" status-icon>
             <el-form-item>
               <div align="center">
-                <img src="~@/assets/img/login_logo.png"></img>
+              <img src="~@/assets/img/login_logo.png"></img>
               </div>
             </el-form-item>
             <el-form-item prop="userName">
@@ -18,7 +18,7 @@
             <el-form-item prop="password">
               <el-input v-model="dataForm.password" type="password" placeholder="密码"></el-input>
             </el-form-item>
-            <el-form-item prop="captcha">
+           <el-form-item prop="captcha">
               <el-row :gutter="20">
                 <el-col :span="14">
                   <el-input v-model="dataForm.captcha" placeholder="验证码">
