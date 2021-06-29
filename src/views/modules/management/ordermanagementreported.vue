@@ -654,7 +654,7 @@
       // 部门查询
       getdeptDataList () {
         this.$http({
-          url: this.$http.adornUrl('/sys/dept/list'),
+          url: this.$http.adornUrl('/sys/dept/lists'),
           method: 'get',
           params: this.$http.adornParams({'name': this.deptFrom.name})
         }).then(({data}) => {

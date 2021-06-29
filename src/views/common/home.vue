@@ -1,1114 +1,1099 @@
+<!--  -->
 <template>
-  <div class="mod-home">
-    <div class="show-data-content" style="height: 100%;">
-      <el-row :gutter="10" class="home-row-main">
-        <el-col :span="6" class="home-col home-col-left">
-          <el-row :gutter="10" class="home-row-up">
-            <div class="show-chart">
-                <div class="charts">
-                <div class="chart-up">
-                  <div class="chart-header">
-                    <span class="char-title">异常排名</span>
-                    <div class="filter">
-                      <el-radio-group size="mini" @change="topRadioChange" v-model="topPeriod" style="display: inline;vertical-align: text-bottom;">
-                        <el-radio-button v-for="period in topPeriodList" :label="period" :key="period"></el-radio-button>
-                      </el-radio-group>
-                    </div>
-                  </div>
-                  <div align="center" v-if="false">
-                    <el-checkbox-group size="mini"  @change="topCheckboxChange" v-model="topPeriod" style="display: inline;vertical-align: text-bottom;">
-                      <el-checkbox-button  v-for="level in deviceLevelList" :label="level" :key="level">{{level}}</el-checkbox-button>
-                    </el-checkbox-group>
-                  </div>
+  <div class="box">
+    <div class="head">
+      <h1 class="title">XXXXX平台</h1>
+    </div>
+    <div class="main">
+      <div class="maint">
+        <div class="mt1">
+          <div class="mt1bg"></div>
+          <div class="tit_box">
+            <div class="tit">
+              <img src="~@static/static/icon.png"
+                   alt="">
+              <span>设备状态</span>
+            </div>
+          </div>
+          <div class="mtbox"
+               id="deviceStatus">
 
-                </div>
-                <ul class="yichang">
-                  <li v-for="(item, key) in deviceExceptionTopList">
-                    <span>{{ item.deviceName }}</span>
-                    <span>{{ item.exceptionCount }}</span>
-                  </li>
-                </ul>
-<!--                 <el-table
-                    ref="table"
-                    :data="deviceExceptionTopList"
-                    :border="false"
-                    :show-header="false"
-                    :cell-style="cellStyle"
-                    :row-style="rowStyle"
-                    style="width: 100%;">
-                    <el-table-column
-                      prop="deviceName"
-                      header-align="center"
-                      align="left"
-                      label="设备">
-                    </el-table-column>
-                    <el-table-column
-                      prop="exceptionCount"
-                      header-align="center"
-                      align="right"
-                      label="频次">
-                    </el-table-column>
-                    </el-table> -->
-                    <div class="more" v-if="deviceExceptionTopList.length >=6 ">
-                      <router-link to="inspection-inspectionresultexception">更多>></router-link>
-                    </div>
-              </div>
+          </div>
+        </div>
+        <div class="mt2">
+          <div class="bg1"></div>
+          <div class="bg2"></div>
+          <div class="bg3">
+            <img src="~@static/static/sj.png"
+                 alt="">
+            <span>巡检看板</span>
+          </div>
+          <div class="bg4"></div>
+          <div class="bg5"></div>
+          <div class="btn_list">
+            <div class="btn">
+              <img src="~@static/static/s.png"
+                   alt="">
+              <span>本日</span>
             </div>
-          </el-row>
-          <el-row :gutter="10" class="home-row-down">
-            <div class="show-chart">
-                <div class="charts">
-                <div class="chart-up">
-                  <div class="chart-header">
-                    <span class="char-title">巡检完成率</span>
-                    <div class="filter">
-                      <el-date-picker v-model="finishStartTime" type="date" value-format="yyyy-MM-dd" @change="handleStartTimeChange" :picker-options="startDatePicker" style="width:140px;"></el-date-picker>
-                    </div>
-                  </div>
-                </div>
-                <div v-show="hasFinishData===true" class="chart-down">
-                  <chartpie id="chartFinish" ref="chartFinish" align="center" :b="inspectItemSum" :a="inspectedItemSum" :title="completionRate" style="height:100%;"></chartpie>
-                </div>
-                <div class="no-data" align="center" v-show="hasFinishData===false">暂无数据</div>
-              </div>
+            <div class="btn">
+              <img src="~@static/static/s.png"
+                   alt="">
+              <span>本周</span>
             </div>
-          </el-row>
-        </el-col>
-        <el-col :span="12" class="home-col home-col-middle">
-          <el-row :gutter="10" class="home-row-up">
-            <div class="show-chart">
-                <div class="charts">
-                <div class="chart-up">
-                  <div class="chart-header">
-                    <span class="char-title">异常分布</span>
-                    <div class="filter">
-                      <el-radio-group size="mini" @change="exceptionRadioChange" v-model="exceptionFilter" style="display: inline;vertical-align: text-bottom;">
-                        <el-radio-button v-for="period in exceptionPeriodList" :label="period" :key="period"></el-radio-button>
-                      </el-radio-group>
-                    </div>
-                  </div>
-                </div>
-                <div class="chart-down">
-                  <chartcolumn v-show="hasExceptionData===true" id="chartException" ref="chartException" align="center" style="height:100%;" :legend="exceptionLegend" :category="exceptionCategory" :seriesA="exceptionSeriesA" :seriesB="exceptionSeriesB" :seriesC="exceptionSeriesC"></chartcolumn>
-                  <div class="no-data" align="center" v-show="hasExceptionData===false">暂无数据</div>
-                </div>
-              </div>
+            <div class="btn">
+              <img src="~@static/static/s.png"
+                   alt="">
+              <span>本月</span>
             </div>
-          </el-row>
-          <el-row :gutter="10" class="home-row-down">
-            <div class="show-chart" style="padding-bottom: 0px;">
-                <div class="charts">
-                <div class="chart-up">
-                  <div class="chart-header">
-                    <span class="char-title">设备指标趋势</span>
-                    <el-form :inline="true" :model="dataForm" align="center" class="shebie" id="shebiex">
-                      <el-form-item>
-                        <el-select v-model="dataForm.deviceId" placeholder="巡检设备" @change="deviceSelectChange" style="width:140px;">
-                          <el-option
-                            v-for="item in deviceList"
-                            :key="item.deviceId"
-                            :label="item.deviceName"
-                            :value="item.deviceId">
-                          </el-option>
-                        </el-select>
-                      </el-form-item>
-                      <el-form-item>
-                        <el-select v-model="dataForm.itemId" placeholder="巡检项" @change="itemSelectChange" style="width:140px;">
-                          <el-option
-                            v-for="item in itemList"
-                            :key="item.id"
-                            :label="item.name"
-                            :value="item.id">
-                          </el-option>
-                        </el-select>
-                      </el-form-item>
-                    </el-form>
-                    <div class="filter">
-                      <el-radio-group size="mini" @change="inspectionRadioChange" v-model="inspectionFilter" style="display: inline;vertical-align: text-bottom;">
-                        <el-radio-button v-for="period in inspectionPeriodList" :label="period" :key="period"></el-radio-button>
-                      </el-radio-group>
-                    </div>
-                  </div>
-                </div>
-                <div class="chart-down chartInspection">
-                  <chartline v-show="hasInspectionData===true" id="chartInspection" ref="chartInspection" align="center" :category="inspectionCategory" :series="inspectionSeries"></chartline>
-                  <div class="no-data" align="center" v-show="hasInspectionData===false">暂无数据</div>
-                </div>
-              </div>
+            <div class="btn">
+              <img src="~@static/static/s.png"
+                   alt="">
+              <span>本年</span>
             </div>
-          </el-row>
-        </el-col>
-        <el-col :span="6" class="home-col home-col-right">
-          <el-row :gutter="10" class="home-row-up-alert">
-            <div class="show-alert" align="center">
-              <el-badge :value="workLog" :max="99" class="alert">
-                <el-button type="primary" @click.native="newsHandle(1)">交接日志</el-button>
-              </el-badge>
+          </div>
+          <div class="suspension1">
+            <div class="data_box">
+              77%
+            </div>
+            <div class="tit_box">
+              <span>完成率</span>
+              <img class="img2"
+                   src="~@static/static/r_86.png"
+                   alt="">
+            </div>
+          </div>
+          <div class="suspension2">
+            <div class="tit_box">
+              <span>漏检率</span>
+              <img class="img2"
+                   src="~@static/static/r_86.png"
+                   alt="">
+            </div>
+            <div class="data_box">
+              77%
+            </div>
+          </div>
+          <div class="suspension3">
+            <div class="data_box">
+              77%
+            </div>
+            <div class="tit_box">
+              <span>缺勤率</span>
+              <img class="img2"
+                   src="~@static/static/r_86.png"
+                   alt="">
+            </div>
+          </div>
+        </div>
+        <div class="mt3">
+          <div class="tit_box">
+            <div class="tit">
+              <img src="~@static/static/icon.png"
+                   alt="">
+              <span>异常排名(TOP 5)</span>
+            </div>
+          </div>
+          <div class="mtbox"
+               id="abnormal">
 
-              <el-badge :value="bugLog" :max="10" class="alert">
-                <el-button  type="primary" @click.native="newsHandle(2)">巡检工单</el-button>
-            </el-badge>
+          </div>
+        </div>
+      </div>
+      <div class="mainb">
+        <div class="mbbox">
+          <div class="tit_box">
+            <div class="tit">
+              <img src="~@static/static/icon.png"
+                   alt="">
+              <span>设备异常趋势</span>
             </div>
-          </el-row>
-          <el-row :gutter="10" class="home-row-down-alert" style="margin-bottom: 0px;">
-            <div class="show-chart" style="padding-bottom: 0px;">
-                <div class="charts">
-                <div class="exception-chart-up">
-                  <div class="chart-header">
-                    <span class="char-title">设备状态</span>
-                    <div class="filter">
-                      <el-radio-group size="mini" @change="statusRadioChange" v-model="statusFilter" style="display: inline;vertical-align: text-bottom;">
-                        <el-radio-button v-for="period in statusPeriodList" :label="period" :key="period"></el-radio-button>
-                      </el-radio-group>
-                    </div>
-                  </div>
-                </div>
-                <div class="exception-chart-down">
-                  <chartlink v-show="hasLinkData===true" id="chartLink" ref="chartLink" class="chart-link" :series="statusList" align="center"></chartlink>
-                  <div class="no-data" align="center" v-show="hasLinkData===false">暂无数据</div>
-                </div>
-              </div>
+            <div class="btn_box">
+              <div class="titr_btn">日</div>
+              <div class="titr_btn">月</div>
+              <div class="titr_btn">年</div>
             </div>
-          </el-row>
-        </el-col>
-      </el-row>
-      <news v-if="newsVisible" ref="news"></news>
+          </div>
+          <div class="cheart_box"
+               id="abnormalTrend">
+
+          </div>
+        </div>
+        <div class="mbbox">
+          <div class="tit_box">
+            <div class="tit">
+              <img src="~@static/static/icon.png"
+                   alt="">
+              <span>巡检完成率趋势</span>
+            </div>
+            <div class="btn_box">
+              <div class="titr_btn">日</div>
+              <div class="titr_btn">月</div>
+              <div class="titr_btn">年</div>
+            </div>
+          </div>
+          <div class="cheart_box"
+               id="carryOut">
+
+          </div>
+        </div>
+        <div class="mbbox">
+          <div class="tit_box">
+            <div class="tit">
+              <img src="~@static/static/icon.png"
+                   alt="">
+              <span>缺勤周器表</span>
+            </div>
+            <div class="btn_box">
+              <div class="titr_btn">日</div>
+              <div class="titr_btn">月</div>
+              <div class="titr_btn">年</div>
+            </div>
+          </div>
+          <div class="cheart_box"
+               id="absent">
+
+          </div>
+        </div>
+        <div class="mbbox">
+          <div class="tit_box">
+            <div class="tit">
+              <img src="~@static/static/icon.png"
+                   alt="">
+              <span>漏检周期表</span>
+            </div>
+            <div class="btn_box">
+              <div class="titr_btn">日</div>
+              <div class="titr_btn">月</div>
+              <div class="titr_btn">年</div>
+            </div>
+          </div>
+          <div class="cheart_box"
+               id="missed">
+
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-  import { formatDate, getFirstDayOfWeek, getFirstDayOfMonth, getFirstDayOfYear } from '@/utils'
-  import chartbar from '@/components/charts/bar'
-  import chartpie from '@/components/charts/pie'
-  import chartline from '@/components/charts/lines'
-  import chartcolumn from '@/components/charts/column'
-  import chartlink from '@/components/charts/link'
-  import news from '.././main-navbar-news'
+import * as echarts from 'echarts';
+import '@static/static/flexible.js'
 export default {
-    data () {
-      return {
-        dataForm: {
-          deviceId: '',
-          itemId: ''
+  data () {
+    return {
+      deviceStatusLine: null,//设备状态
+      abnormalTrend: null,//异常趋势
+      absent: null,//缺勤周期
+      missed: null,//漏检周期
+      abnormal: null,//异常排名
+      carryOut: null,//完成
+    };
+  },
+
+  components: {},
+
+  computed: {},
+
+  beforeCreate () {
+
+  },
+
+  mounted () {
+    this.getDeviceStatus()
+    this.getAbnormalTrend()
+    this.getAbsent()
+    this.getMissed()
+    this.getAbnormal()
+    this.getCarryOut()
+  },
+  activated () {
+    if (this.deviceStatusLine) {
+      this.deviceStatusLine.resize()
+    }
+    if (this.abnormalTrend) {
+      this.abnormalTrend.resize()
+    }
+    if (this.absent) {
+      this.absent.resize()
+    }
+    if (this.missed) {
+      this.missed.resize()
+    }
+    if (this.abnormal) {
+      this.abnormal.resize()
+    }
+    if (this.carryOut) {
+      this.carryOut.resize()
+    }
+  },
+
+
+  methods: {
+    getDeviceStatus () {//设备状态
+      var option = {
+        tooltip: {
+          trigger: 'item'
         },
-        inspectItemSum: 0,
-        inspectedItemSum: 0,
-        TotalCount: 0,
-        completionRate: '',
-        finishStartTime: '',
-        finishEndTime: '',
-        topStartTime: '',
-        topEndTime: '',
-        inspectionStartTime: '',
-        inspectionEndTime: '',
-        exceptionStartTime: '',
-        exceptionEndTime: '',
-        statusStartTime: '',
-        statusEndTime: '',
-        deviceList: [],
-        itemList: [],
-        workLog: '',
-        bugLog: '',
-        levelIds: [],
-        topFilter: ['A类', 'B类', 'C类'],
-        topPeriod: '本年',
-        topPeriodList: ['本周', '本月', '本年'],
-        finishFilter: [''],
-        exceptionFilterType: '',
-        inspectionFilter: '本年',
-        exceptionFilter: '本年',
-        statusFilter: '本年',
-        deviceLevelList: ['A类', 'B类', 'C类'],
-        inspectionPeriodList: ['本周', '本月', '本年'],
-        exceptionPeriodList: ['本周', '本月', '本年'],
-        statusPeriodList: ['本周', '本月', '本年'],
-        hasLinkData: false,
-        hasInspectionData: false,
-        hasFinishData: true,
-        hasExceptionData: false,
-        statusList: [],
-        deviceExceptionTopList: [],
-        startDatePicker: this.beginDate(),
-        exceptionLegend: [],
-        exceptionCategory: [],
-        exceptionSeries: [],
-        exceptionSeriesA: [],
-        exceptionSeriesB: [],
-        exceptionSeriesC: [],
-        inspectionCategory: [],
-        inspectionSeries: [],
-        newsVisible: false,
-        totalPage: 0,
-        totalPageTwo: 0,
-        workList: [
+        legend: {
+          bottom: '5%',
+          left: 'center',
+          data: ['总数', '运行', '备用', '检修', '其他'],
+          textStyle: {
+            // color: '#24dcf7',
+            color: '#ffffff'
+          }
+        },
+        series: [
           {
-            newsId: '',
-            userId: '',
-            newsName: '',
-            newsType: '',
-            newsNumber: '',
-            createTime: '',
-            updateTime: ''
+            name: '访问来源',
+            type: 'pie',
+            radius: ['36%', '45%'],
+            color: ['#b1b712', '#1dadff', '#24dcf7', '#c37a1c', '#1c8ac3', '#12b796'],
+            center: ['50%', '43%'],
+            avoidLabelOverlap: false,
+            itemStyle: {
+              borderWidth: 5, //间隔 不好使
+              borderColor: '#fff',
+            },
+
+            label: {
+              show: false,
+              position: 'center'
+            },
+            emphasis: {
+              label: {
+                show: true,
+                fontSize: '40',
+                fontWeight: 'bold'
+              }
+            },
+            labelLine: {
+              show: false
+            },
+            data: [
+              { value: 1048, name: '总数' },
+              { value: 735, name: '运行' },
+              { value: 580, name: '备用' },
+              { value: 484, name: '检修' },
+              { value: 300, name: '其他' }
+            ]
           }
-        ],
-        logList: [
+        ]
+      };
+      this.deviceStatusLine = echarts.init(document.getElementById('deviceStatus'))
+      this.deviceStatusLine.setOption(option)
+      window.addEventListener('resize', () => {
+        this.deviceStatusLine.resize()
+      })
+    },
+    getAbnormal () {//异常排名
+      var option = {
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: {
+            type: 'shadow'
+          }
+        },
+        grid: {
+          left: '3%',
+          right: '4%',
+          bottom: 0,
+          top: '20%',
+          containLabel: true
+        },
+        xAxis: {
+          show: false
+        },
+        yAxis: {
+          type: 'category',
+          data: ['No.1 异常名称', 'No.1 异常名称', 'No.1 异常名称', 'No.1 异常名称', 'No.1 异常名称'],
+          axisLine: {
+            show: false
+          },
+          axisTick: {
+            show: false
+          },
+          axisLabel: {
+            color: '#24dcf7'
+          }
+        },
+        series: [
           {
-            newsId: '',
-            userId: '',
-            newsName: '',
-            newsType: '',
-            newsNumber: '',
-            createTime: '',
-            updateTime: ''
-          }
-        ],
-        newstype: '1'
-      }
+            name: '2011年',
+            type: 'bar',
+            data: [18203, 23489, 29034, 104970, 131744],
+            showBackground: true,
+            backgroundStyle: {
+              'color': 'rgba(180, 180, 180, 0.2)'
+            },
+            barWidth: '15%',
+            itemStyle: {
+              normal: {
+                color: '#24dcf7'
+              }
+            }
+          },
+          // {
+          //   name: '2012年',
+          //   type: 'bar',
+          //   data: [19325, 23438, 31000, 121594, 134141, 681807]
+          // }
+        ]
+      };
+      this.abnormal = echarts.init(document.getElementById('abnormal'))
+      this.abnormal.setOption(option)
+      window.addEventListener('resize', () => {
+        this.abnormal.resize()
+      })
     },
-    components: {
-      chartbar,
-      chartpie,
-      chartline,
-      chartcolumn,
-      chartlink,
-      news
+    getAbnormalTrend () {//异常趋势
+      var option = {
+        // title: {
+        //   text: '折线图堆叠'
+        // },
+        tooltip: {
+          trigger: 'axis'
+        },
+        legend: {
+          right: 0,
+          top: '10%',
+          data: ['邮件营销', '联盟广告'],
+          textStyle: {
+            color: '#fff'
+          }
+        },
+        grid: {
+          left: '3%',
+          right: '4%',
+          top: '30%',
+          bottom: 0,
+          containLabel: true
+        },
+        xAxis: {
+          type: 'category',
+          boundaryGap: false,
+          data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月'],
+          axisLabel: {
+            color: '#fff',
+            fontSize: '12'
+          },
+          axisLine: {
+            lineStyle: {
+              color: 'rgba(215,215,255,.5)'
+            }
+          },
+          axisTick: {
+            show: false
+          }
+        },
+        yAxis: {
+          type: 'value',
+          axisLine: {
+            show: false
+          },
+          axisLabel: {
+            color: '#fff',
+            fontSize: '12',
+          },
+          axisTick: {
+            show: false,
+            alignWithLabel: false
+          },
+          splitLine: {
+            lineStyle: {
+              color: '#141e25',
+              type: 'dashed'
+            }
+          }
+        },
+        series: [
+          {
+            name: '邮件营销',
+            type: 'line',
+            data: [120, 182, 101, 134, 90, 230, 210],
+            lineStyle: {
+              color: '#00FF00'
+            }
+          },
+          {
+            name: '联盟广告',
+            type: 'line',
+            data: [220, 182, 191, 234, 290, 330, 310],
+            lineStyle: {
+              color: '#00FF00'
+            }
+          }
+        ]
+      };
+      this.abnormalTrend = echarts.init(document.getElementById('abnormalTrend'))
+      this.abnormalTrend.setOption(option)
+      window.addEventListener('resize', () => {
+        this.abnormalTrend.resize()
+      })
     },
-    computed: {
-      userId: {
-        get () { return this.$store.state.user.id }
-      }
+    getCarryOut () {//完成趋势
+      var option = {
+        // title: {
+        //   text: '折线图堆叠'
+        // },
+        tooltip: {
+          trigger: 'axis'
+        },
+        legend: {
+          right: 0,
+          top: '10%',
+          data: ['邮件营销', '联盟广告'],
+          textStyle: {
+            color: '#fff'
+          }
+        },
+        grid: {
+          left: '3%',
+          right: '4%',
+          top: '30%',
+          bottom: 0,
+          containLabel: true
+        },
+        xAxis: {
+          type: 'category',
+          boundaryGap: false,
+          data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月'],
+          axisLabel: {
+            color: '#fff',
+            fontSize: '12'
+          },
+          axisLine: {
+            lineStyle: {
+              color: 'rgba(215,215,255,.5)'
+            }
+          },
+          axisTick: {
+            show: false
+          }
+        },
+        yAxis: {
+          type: 'value',
+          axisLine: {
+            show: false
+          },
+          axisLabel: {
+            color: '#fff',
+            fontSize: '12',
+          },
+          axisTick: {
+            show: false,
+            alignWithLabel: false
+          },
+          splitLine: {
+            lineStyle: {
+              color: '#141e25',
+              type: 'dashed'
+            }
+          }
+        },
+        series: [
+          {
+            name: '邮件营销',
+            type: 'line',
+            data: [120, 182, 101, 134, 90, 230, 210],
+            lineStyle: {
+              color: '#00FF00'
+            }
+          },
+          {
+            name: '联盟广告',
+            type: 'line',
+            data: [220, 182, 191, 234, 290, 330, 310],
+            lineStyle: {
+              color: '#00FF00'
+            }
+          }
+        ]
+      };
+      this.carryOut = echarts.init(document.getElementById('carryOut'))
+      this.carryOut.setOption(option)
+      window.addEventListener('resize', () => {
+        this.carryOut.resize()
+      })
     },
-    mounted () {
-      this.initModel()
+    getAbsent () {//缺勤周器表
+      var option = {
+        color: ['#ffffff'],
+        xAxis: {
+          type: 'category',
+          data: ['1月', '2月', '3月', '4月', '5月', '6月'],
+          axisLabel: {
+            color: '#fff',
+            fontSize: '12'
+          },
+          axisLine: {
+            lineStyle: {
+              color: 'rgba(215,215,255,.5)'
+            }
+          },
+          axisTick: {
+            show: false
+          }
+        },
+        yAxis: {
+          type: 'value',
+          axisLine: {
+            lineStyle: {
+              color: 'rgba(215,215,255,.5)'
+            }
+          },
+          axisLabel: {
+            color: '#fff',
+            fontSize: '12',
+            show: false
+          },
+          axisTick: {
+            show: false,
+            alignWithLabel: false
+          },
+          splitLine: {
+            show: false
+          }
+        },
+        grid: {
+          left: '0%',
+          top: '25%',
+          right: '0%',
+          bottom: '0%',
+          containLabel: true
+        },
+        series: [{
+          itemStyle: {
+            normal: {
+              color: new echarts.graphic.LinearGradient(0, 1, 0, 0, [{
+                offset: 0,
+                color: "#021c33" // 0% 处的颜色
+              }, {
+                offset: 1,
+                color: "#24dcf7" // 100% 处的颜色
+              }], false)
+            }
+          },
+          data: [120, 200, 150, 80, 70, 110, 130],
+          type: 'bar',
+          barWidth: '20%'
+        }],
+        tooltip: {
+          show: true,
+          trigger: 'axis'
+        }
+      };
+      this.absent = echarts.init(document.getElementById('absent'))
+      this.absent.setOption(option)
+      window.addEventListener('resize', () => {
+        this.absent.resize()
+      })
     },
-    // mounted () {
-    //   this.getDataList()
-    // },
-    methods: {
-      initModel() {
-        let today = new Date()
-        this.finishStartTime = new Date()
-        this.finishStartTime.setDate(this.finishStartTime.getDate() - 1)
-        this.finishStartTime = formatDate(this.finishStartTime, 'yyyy-MM-dd')
-        if (this.topPeriod === '本周') {
-          this.topStartTime = getFirstDayOfWeek(today)
-        } else if (this.topPeriod === '本月') {
-          this.topStartTime = getFirstDayOfMonth(today)
-        } else if (this.topPeriod === '本年') {
-          this.topStartTime = getFirstDayOfYear(today)
-        } else if (this.topPeriod === '全部') {
-          this.topStartTime = ''
-        }
-        if (this.inspectionFilter === '本周') {
-          this.inspectionStartTime = getFirstDayOfWeek(today)
-        } else if (this.inspectionFilter === '本月') {
-          this.inspectionStartTime = getFirstDayOfMonth(today)
-        } else if (this.inspectionFilter === '本年') {
-          this.inspectionStartTime = getFirstDayOfYear(today)
-        } else if (this.inspectionFilter === '全部') {
-          this.inspectionStartTime = ''
-        }
-        if (this.statusFilter === '本周') {
-          this.statusStartTime = getFirstDayOfWeek(today)
-        } else if (this.statusFilter === '本月') {
-          this.statusStartTime = getFirstDayOfMonth(today)
-        } else if (this.statusFilter === '本年') {
-          this.statusStartTime = getFirstDayOfYear(today)
-        } else if (this.statusFilter === '全部') {
-          this.statusStartTime = ''
-        }
-        if (this.exceptionFilter === '本周') {
-          this.exceptionFilterType = '%a'
-          this.exceptionStartTime = getFirstDayOfWeek(today)
-        } else if (this.exceptionFilter === '本月') {
-          this.exceptionFilterType = '%d'
-          this.exceptionStartTime = getFirstDayOfMonth(today)
-        } else if (this.exceptionFilter === '本年') {
-          this.exceptionFilterType = '%m'
-          this.exceptionStartTime = getFirstDayOfYear(today)
-        } else if (this.exceptionFilter === '全部') {
-          this.exceptionFilterType = '%y'
-          this.exceptionStartTime = ''
-        }
-        this.levelIds = []
-        for (var i = 0; i < this.topFilter.length; i++) {
-          if (this.topFilter[i] === 'A类') {
-            this.levelIds.push(1)
-          } else if (this.topFilter[i] === 'B类') {
-            this.levelIds.push(2)
-          } else if (this.topFilter[i] === 'C类') {
-            this.levelIds.push(3)
-          }
-        }
-        this.getDataList()
-        this.newsexistwork()
-        this.newsexistlog()
-      },
-      beginDate () {
-        return {
-          disabledDate (time) {
-            return time.getTime() > Date.now() // 开始时间不选时，结束时间最大值小于等于当天
-          }
-        }
-      },
-      topCheckboxChange (val) {
-        this.levelIds = []
-        for (var i = 0; i < val.length; i++) {
-          if (val[i] === 'A类') {
-            this.levelIds.push(1)
-          } else if (val[i] === 'B类') {
-            this.levelIds.push(2)
-          } else if (val[i] === 'C类') {
-            this.levelIds.push(3)
-          }
-        }
-        this.getDeviceExceptionTop()
-      },
-      topRadioChange (val) {
-        let today = new Date()
-        if (val === '本周') {
-          this.topStartTime = getFirstDayOfWeek(today)
-        } else if (val === '本月') {
-          this.topStartTime = getFirstDayOfMonth(today)
-        } else if (val === '本年') {
-          this.topStartTime = getFirstDayOfYear(today)
-        } else if (val === '全部') {
-          this.topStartTime = ''
-        }
-
-        this.getDeviceExceptionTop()
-      },
-      getDeviceExceptionTop () {
-        this.$http({
-          url: this.$http.adornUrl(`/inspection/device/getexceptiontop`),
-          method: 'post',
-          data: this.$http.adornParams({
-            'levleIds': this.levelIds,
-            'startTime': this.topStartTime,
-            'endTime': this.topEndTime
-          })
-        }).then(({data}) => {
-          if (data && data.code === 0) {
-            this.deviceExceptionTopList = data.topList
-          } else {
-            this.$message.error(data.msg)
-          }
-        })
-      },
-      statusRadioChange (val) {
-        let today = new Date()
-        if (val === '本周') {
-          this.statusStartTime = getFirstDayOfWeek(today)
-        } else if (val === '本月') {
-          this.statusStartTime = getFirstDayOfMonth(today)
-        } else if (val === '本年') {
-          this.statusStartTime = getFirstDayOfYear(today)
-        } else if (val === '全部') {
-          this.statusStartTime = ''
-        }
-        this.getDeviceStatus()
-      },
-      inspectionRadioChange (val) {
-        let today = new Date()
-        if (val === '本周') {
-          this.inspectionStartTime = getFirstDayOfWeek(today)
-        } else if (val === '本月') {
-          this.inspectionStartTime = getFirstDayOfMonth(today)
-        } else if (val === '本年') {
-          this.inspectionStartTime = getFirstDayOfYear(today)
-        } else if (val === '全部') {
-          this.inspectionStartTime = ''
-        }
-        if (this.dataForm.itemId !== '') {
-          this.getDeviceInspection()
-        }
-      },
-      exceptionRadioChange (val) {
-        let today = new Date()
-        if (val === '本周') {
-          this.exceptionFilterType = '%a'
-          this.exceptionStartTime = getFirstDayOfWeek(today)
-        } else if (val === '本月') {
-          this.exceptionFilterType = '%d'
-          this.exceptionStartTime = getFirstDayOfMonth(today)
-        } else if (val === '本年') {
-          this.exceptionFilterType = '%m'
-          this.exceptionStartTime = getFirstDayOfYear(today)
-        } else if (val === '全部') {
-          this.exceptionFilterType = '%Y'
-          this.exceptionStartTime = ''
-        }
-        this.getExceptionStatus()
-      },
-      deviceSelectChange (val) {
-        this.dataForm.itemId = ''
-        this.itemList = []
-        this.getItemsByDevice(val)
-      },
-      itemSelectChange (val) {
-        this.getDeviceInspection()
-      },
-      handleStartTimeChange (val) {
-        this.finishStartTime = val
-        this.getCompletionRate()
-      },
-      getDataList () {
-        this.getDeviceStatus()
-        this.getDeviceExceptionTop()
-        this.getDevice()
-        this.getExceptionStatus()
-        this.getCompletionRate()
-      },
-      getExceptionStatus () {
-        this.exceptionLegend = []
-        this.exceptionCategory = []
-        this.exceptionSeriesA = []
-        this.exceptionSeriesB = []
-        this.exceptionSeriesC = []
-        this.hasExceptionData = false
-        this.$http({
-          url: this.$http.adornUrl(`/inspection/inspectionresult/statisticsbytime`),
-          method: 'get',
-          params: this.$http.adornParams({
-            'type': this.exceptionFilterType,
-            'startTime': this.exceptionStartTime
-          })
-        }).then(({data}) => {
-          if (data && data.code === 0) {
-            this.hasExceptionData = true
-            this.exceptionLegend = data.data.legend
-            let category = []
-            if (this.exceptionFilterType === '%a') {
-              for (let i = 0; i < data.data.category.length; i++) {
-                if (data.data.category[i] === 'Mon') {
-                  category.push('周一')
-                } else if (data.data.category[i] === 'Tue') {
-                  category.push('周二')
-                } else if (data.data.category[i] === 'Wed') {
-                  category.push('周三')
-                } else if (data.data.category[i] === 'Thu') {
-                  category.push('周四')
-                } else if (data.data.category[i] === 'Fri') {
-                  category.push('周五')
-                } else if (data.data.category[i] === 'Sat') {
-                  category.push('周六')
-                } else if (data.data.category[i] === 'Sun') {
-                  category.push('周日')
-                } else {
-                  category.push(data.data.category[i])
-                }
-              }
+    getMissed () {//漏检周期
+      var option = {
+        color: ['#ffffff'],
+        xAxis: {
+          type: 'category',
+          data: ['1月', '2月', '3月', '4月', '5月', '6月'],
+          axisLabel: {
+            color: '#fff',
+            fontSize: '12'
+          },
+          axisLine: {
+            lineStyle: {
+              color: 'rgba(215,215,255,.5)'
             }
-            if (this.exceptionFilterType === '%d') {
-              for (let i = 0; i < data.data.category.length; i++) {
-                  category.push(data.data.category[i] + '日')
-              }
-            }
-            if (this.exceptionFilterType === '%m') {
-              for (let i = 0; i < data.data.category.length; i++) {
-                  category.push(data.data.category[i] + '月')
-              }
-            }
-            this.exceptionCategory = category
-            if (data.data.legend.length > 0 && data.data.series.A.length > 0){
-              this.hasExceptionData = true
-              this.exceptionSeriesA = data.data.series.A
-              this.exceptionSeriesB = data.data.series.B
-              this.exceptionSeriesC = data.data.series.C
-              if (this.exceptionFilterType === '%a') {
-                let array = ["周一", "周二", "周三", "周四", "周五", "周六", "周日"]
-                let cms_series = {
-                  category: [],
-                  A: [],
-                  B: [],
-                  C: []
-                }
-                for (const i in array) {
-                  for (const y in this.exceptionCategory) {
-                    if (this.exceptionCategory[y] === array[i]) {
-                      cms_series.category.push(this.exceptionCategory[y])
-                      cms_series.A.push(this.exceptionSeriesA[y])
-                      cms_series.B.push(this.exceptionSeriesB[y])
-                      cms_series.C.push(this.exceptionSeriesC[y])
-                    }
-                  }
-                }
-                this.exceptionCategory = cms_series.category
-                this.exceptionSeriesA = cms_series.A
-                this.exceptionSeriesB = cms_series.B
-                this.exceptionSeriesC = cms_series.C
-                // console.log(cms_series)
-                // console.log(this.exceptionCategory)
-                // console.log(this.exceptionSeriesA)
-                // console.log(this.exceptionSeriesB)
-                // console.log(this.exceptionSeriesC)
-              }
-              this.drawChart()
-            } else {
-              this.hasExceptionData = false
-            }
-          } else {
-            this.$message.error(data.msg)
-            this.hasExceptionData = false
+          },
+          axisTick: {
+            show: false
           }
-        })
-      },
-      getDeviceStatus () {
-        this.hasLinkData = false
-        this.$http({
-          url: this.$http.adornUrl(`/inspection/device/getstatus`),
-          method: 'get',
-          params: this.$http.adornParams({
-            'startTime': this.statusStartTime,
-            'endTime': this.statusEndTime
-          })
-        }).then(({data}) => {
-          if (data && data.code === 0) {
-            if (data.status.length > 0) {
-              this.hasLinkData = true
-              this.statusList = data.status
-              this.drawChart()
-            } else {
-              this.hasLinkData = false
+        },
+        yAxis: {
+          type: 'value',
+          axisLine: {
+            lineStyle: {
+              color: 'rgba(215,215,255,.5)'
             }
-          } else {
-            this.$message.error(data.msg)
-            this.hasLinkData = false
+          },
+          axisLabel: {
+            color: '#fff',
+            fontSize: '12',
+            show: false
+          },
+          axisTick: {
+            show: false,
+            alignWithLabel: false
+          },
+          splitLine: {
+            show: false
           }
-        })
-      },
-      getDevice () {
-        if (this.deviceList <= 0) {
-          this.$http({
-            url: this.$http.adornUrl('/inspection/device/getdevicetoinspection'),
-            method: 'get',
-            params: this.$http.adornParams()
-          }).then(({data}) => {
-            this.deviceList = data.deviceList
-            this.dataForm.deviceId = this.deviceList[0].deviceId
-            this.$nextTick(()=>{
-              this.getItemsByDevice(this.dataForm.deviceId)
-            })
-          })
-        }
-      },
-      getItemsByDevice (deviceId) {
-        if (deviceId !== '') {
-          this.$http({
-            url: this.$http.adornUrl('/inspection/inspectionitem/getitemsbydevice'),
-            method: 'get',
-            params: this.$http.adornParams({
-              'deviceId': deviceId
-            })
-          }).then(({data}) => {
-            if (data.list.length > 0) {
-              for(var i = data.list.length - 1; i > 0; i--){
-                if (data.list[i].inspectionType === 2 || data.list[i].inspectionType === 8 || data.list[i].inspectionType === 9 ) {
-                  console.log(data.list[i])
-                  data.list.splice(i,1)
-                }
-              }
-              this.itemList = data.list
-              this.dataForm.itemId = data.list[0].id
-              if (this.dataForm.itemId > 0) {
-                this.$nextTick(function () {
-                  this.getDeviceInspection()
-                })
-              } else { // 没有巡检项
-                this.hasInspectionData = false
-              }
-            } else {
-              this.hasInspectionData = false
+        },
+        grid: {
+          left: '0%',
+          top: '25%',
+          right: '0%',
+          bottom: '0%',
+          containLabel: true
+        },
+        series: [{
+          itemStyle: {
+            normal: {
+              color: new echarts.graphic.LinearGradient(0, 1, 0, 0, [{
+                offset: 0,
+                color: "#021c33" // 0% 处的颜色
+              }, {
+                offset: 1,
+                color: "#24dcf7" // 100% 处的颜色
+              }], false)
             }
-          })
+          },
+          data: [120, 200, 150, 80, 70, 110, 130],
+          type: 'bar',
+          barWidth: '20%'
+        }],
+        tooltip: {
+          show: true,
+          trigger: 'axis'
         }
-      },
-      getDeviceInspection () {
-        this.series = []
-        this.$http({
-          url: this.$http.adornUrl('/inspection/inspectionresult/selectbyitem'),
-          method: 'get',
-          params: this.$http.adornParams({
-            'itemId': this.dataForm.itemId,
-            'deviceId': this.dataForm.deviceId,
-            'startTime': this.inspectionStartTime,
-            'endTime': this.inspectionEndTime
-          })
-        }).then(({data}) => {
-          if (data && data.code === 0) {
-            this.ids = data.data.ids
-            this.inspectionCategory = data.data.category
-            this.inspectionSeries = data.data.series
-            if (this.inspectionSeries.length > 0) {
-              this.hasInspectionData = true
-            } else {
-              this.hasInspectionData = false
-            }
-            this.drawChart()
-          } else {
-            this.$message.error(data.msg)
-          }
-        })
-      },
-      getCompletionRate () {
-        this.inspectedItemSum = 0
-        this.inspectItemSum = 0
-        this.$http({
-          url: this.$http.adornUrl('/inspection/inspectiontask/getstatus'),
-          method: 'get',
-          params: this.$http.adornParams({
-            'date': this.finishStartTime
-          })
-        }).then(({data}) => {
-          if (data && data.code === 0) {
-            if(data.status[0] != null){
-              let tmpRate = 0
-              this.inspectedItemSum = data.status[0].inspectedItemSum
-              this.TotalCount = data.status[0].inspectItemSum
-              if(this.TotalCount === 0){
-                tmpRate = 0.00
-              }else{
-                tmpRate = this.inspectedItemSum/this.TotalCount
-              }
-              this.completionRate = '已完成' + parseFloat(tmpRate*100).toFixed(4) + '%'
-              this.inspectItemSum = this.TotalCount - this.inspectedItemSum
-            }else{
-              this.inspectedItemSum = 0
-              this.inspectItemSum = 100
-              this.completionRate = '已完成0.00%'
-            }
-
-            this.drawChart()
-          } else {
-            this.$message.error(data.msg)
-          }
-        })
-      },
-      drawChart () {
-        if (this.hasLinkData === true) {
-          this.$nextTick(() => {
-            this.$refs.chartLink.initChart('chartLink')
-          })
-        }
-        if (this.hasInspectionData === true) {
-          this.$nextTick(() => {
-            this.$refs.chartInspection.initChart('chartInspection')
-          })
-        }
-        if (this.hasFinishData === true) {
-          this.$nextTick(() => {
-            this.$refs.chartFinish.initChart('chartFinish')
-          })
-        }
-        if (this.hasExceptionData === true) {
-          this.$nextTick(() => {
-            this.$refs.chartException.initChart('chartException')
-          })
-        }
-      },
-      rowStyle ({row, rowIndex}) {
-        return 'height:34px'
-      },
-      cellStyle () {
-        return 'padding:0'
-      },
-      // 处理消息
-      newsHandle (type) {
-        this.newsVisible = true
-        this.$nextTick(() => {
-          this.$refs.news.init(type)
-        })
-      },
-      newsexistwork () {
-        this.$http({
-          url: this.$http.adornUrl('/sys/news/list'),
-          method: 'get',
-          params: this.$http.adornParams({
-            'page': this.pageIndex,
-            'limit': this.pageSize,
-            'user_id': this.userId,
-            'type': '1'
-          })
-        }).then(({data}) => {
-          if (data && data.code === 0) {
-            this.workList = data.page.list
-            if (data.page.totalCount > 0) {
-              this.workLog = data.page.totalCount
-            } else {
-              this.workLog = ''
-            }
-          } else {
-            this.workList = [{
-              newsId: '',
-              userId: '',
-              newsName: '',
-              newsType: '',
-              newsNumber: '',
-              createTime: '',
-              updateTime: ''
-            }]
-            this.workLog = ''
-          }
-        })
-      },
-      newsexistlog () {
-        this.$http({
-          url: this.$http.adornUrl('/sys/news/list'),
-          method: 'get',
-          params: this.$http.adornParams({
-            'page': this.pageIndex,
-            'limit': this.pageSize,
-            'user_id': this.userId,
-            'type': '2'
-          })
-        }).then(({data}) => {
-          if (data && data.code === 0) {
-            this.logList = data.page.list
-            if (data.page.totalCount > 0) {
-              this.bugLog = data.page.totalCount
-            } else {
-              this.bugLog = ''
-            }
-          } else {
-            this.logList = [{
-              newsId: '',
-              userId: '',
-              newsName: '',
-              newsType: '',
-              newsNumber: '',
-              createTime: '',
-              updateTime: ''
-            }]
-            this.bugLog = ''
-          }
-        })
-      },
-      // 这是一个定时器
-      worktimer () {
-        return setTimeout(() => {
-          this.newsexistwork()
-        }, 1000*60*5)
-      },
-      logtimer () {
-        return setTimeout(() => {
-          this.newsexistlog()
-        }, 1000*60*5)
-      }
-    },
-    // 最终销毁
-    destroyed () {
-      clearTimeout(this.worktimer)
-      clearTimeout(this.logtimer)
-    },
-    watch: {
-      workList () {
-        this.worktimer()
-      },
-      logList () {
-        this.logtimer()
-      }
+      };
+      this.missed = echarts.init(document.getElementById('missed'))
+      this.missed.setOption(option)
+      window.addEventListener('resize', () => {
+        this.missed.resize()
+      })
     }
-
+  }
 }
+
 </script>
+<style lang='scss' scoped>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  color: #fff;
+}
+.box {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  overflow-y: auto;
+  background: url(~@static/static/bg.png) no-repeat top center;
+  background-size: 100% 100%;
+  line-height: 1.15;
+}
 
-<style>
-  .alert {
-    margin-left: 10px;
-    /* margin-top: 40px; */
-    margin-right: 10px;
-    z-index: 5;
-    position: relative;
-  }
-  .alert-span{
-    margin-left: 66px;
-    margin-top: -14px;
-    margin-right: 36px;
-    z-index: 10;
-    position: relative;
-  }
-  .alert-span-one{
-    float: left;
-    width: 20px;
-    height: 20px;
-    background-color: red;
-    border-radius: 50%;
-    -moz-border-radius: 50%;
-    -webkit-border-radius: 50%;
-  }
-  .alert-span-two{
-    float: left;
-    margin-left: 94px;
-    width: 20px;
-    height: 20px;
-    background-color:red;
-    border-radius: 50%;
-    -moz-border-radius: 50%;
-    -webkit-border-radius: 50%;
-  }
-  .no-data {
-    font-size: 20px;
-  }
-  .mod-home {
-    position: relative;
-    height: 100%;
-    line-height: 1.5;
-    background-color: #f1f4f5;
-    overflow: hidden;
-
-  }
-  .home-row-main {
-    width: 100%;
-    margin-left: 0px !important;
-    height: 100%;
-  }
-  .home-row-up {
-    width: 100%;
-    height: 50%;
-    margin-left: 0px !important;
-    margin-bottom: 10px;
-    overflow: hidden;
-  }
-  .home-row-up .el-table{
-    /* height: calc(100% - 105px); */
-    flex: 1;
-    overflow-y: auto;
-  }
-  .home-row-up-alert {
-    width: calc(100% + 5px);
-    margin-bottom: 10px;
-    margin-right: 0px;
-    height: 15%;
-    overflow: hidden;
-  }
-  .home-row-up-alert .show-alert{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  .home-row-down-alert {
-    position: relative;
-    width: calc(100% + 5px);
-    height: 85%;
-    margin-bottom: 10px;
-  }
-  .home-row-down {
-    flex: 1;
-    position: relative;
-    width: 100%;
-    height: calc(100% - 435px);
-    margin-left: 0px !important;
-  }
-  .home-col-left{
-    position: relative;
-    height: 100%;
-    padding-left: 0px !important;
-  }
-  .home-col-middle{
-    position: relative;
-    height: 100%;
-    padding-right: 10px !important;
-  }
-  .home-col-right{
-    position: relative;
-    height: 100%;
-    padding-right: 0px !important;
-  }
-  .show-chart {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    background-color: white;
-  }
-  .show-alert {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    background-color: white;
-  }
-  .charts {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-  }
-  .chart-up {
-    width: 100%;
-    height: 15%;
-    min-height: 56px;
-  }
-  .chart-down {
-    width: 100%;
-    height: 85%;
-  }
-  .chart-header {
-    position: relative;
-    padding-bottom:14px;
-    border-bottom:1px solid #E1E1E1;
-    padding: 14px;
-    margin-bottom: 30px;
-    min-width: 200px;
-    display: flex;
-    justify-content: space-between;
-  }
-  .chart-line {
-    width: 100%;
-    height: 100%;
-    padding: 14px;
-  }
-  .char-title {
-    font-family: MicrosoftYaHei;
-    font-size: 16px;
-    color: #333333;
-    letter-spacing: 0.14px;
+.head {
+  width: 100%;
+  height: 1.875rem;
+  background: url(~@static/static/bt.png) no-repeat center center;
+  background-size: 90% auto;
+  .title {
     text-align: center;
-    padding-bottom:14px;
-    border-bottom:2px solid #2097F2
+    height: 1.25rem;
+    line-height: 1.25rem;
+    color: #fff;
+    font-size: 0.45rem;
   }
-  .date {
-    float: right;
-    font-family: MicrosoftYaHei;
-    font-size: 16px;
-    color: #333333;
-    letter-spacing: 0.14px;
-    text-align: center;
+}
+
+.main {
+  min-width: 1024px;
+  max-width: 1920px;
+}
+
+@keyframes mt1bg {
+  0% {
+    transform: translate(-50%, -50%) rotate(0);
   }
-  .chart-container {
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+.maint {
+  display: flex;
+  height: 5.625rem;
+  margin: 0 auto;
+  margin-top: 0.375rem;
+  .mt1 {
+    flex: 2.5;
+    padding: 0.25rem;
     position: relative;
-    padding-top: 10px;
+    .mt1bg {
+      width: 2.75rem;
+      height: 2.75rem;
+      background: url(~@static/static/q_15.png) no-repeat center center;
+      background-size: 2.75rem 2.75rem;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      animation: mt1bg 25s linear infinite;
+    }
+    .tit_box {
+      height: 0.625rem;
+      background: url(~@static/static/icon1.png) no-repeat bottom center;
+      background-size: 100% auto;
+      .tit {
+        display: flex;
+        img {
+          height: 0.25rem;
+          width: 0.15rem;
+          margin-right: 0.125rem;
+        }
+        span {
+          font-size: 0.25rem;
+          color: #fff;
+        }
+      }
+    }
+    .mtbox {
+      height: 4.5rem;
+      width: 100%;
+    }
   }
-  .filter {
-    display: inline;
-    float: right;
-  }
-  .more {
-    margin: 10px;
-    display: inline-block;
-    cursor: pointer;
-    float: right;
-  }
-  .chart-filter-container {
-    display: inline;
-    float: right;
-    position: absolute;
-    top: 70px;
-    width: 100%;
-    text-align: left;
-  }
-  #chartException{
-    margin-top:  15px !important;
-    height: 100% !important;
-  }
-  #chartFinish{
-
-  }
-  #chartInspection{
-    height: calc(100% + 50px);
-    width: 100%;
-  }
-  .chartInspection{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .shebie{
-    display: flex;
-    flex: 1;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    align-self: flex-start;
-    min-height: 100%;
-  }
-  .shebie .el-form-item{
-    margin: 3px 5px;
-  }
-  .shebie .el-form-item .el-form-item__content{
-    width: 100%;
-  }
-  .shebie .el-form-item .el-form-item__content .el-select{
-   width: 118px !important;
-  }
-  .home-col{
-    display: flex;
-    flex-direction: column;
-  }
-  .chartInspection::-webkit-scrollbar{
-    height: 0;
-  }
-  .chartInspection:hover::-webkit-scrollbar{
-    height: 4px;
-  }
-  .chartInspection:hover::-webkit-scrollbar-track {
-      background-color: transparent;
-/*         -webkit-border-radius: 2em;
-      -moz-border-radius: 2em;
-      border-radius: 2em */
-  }
-  .chartInspection:hover::-webkit-scrollbar-thumb {
-      background-color: #42ADFF;
-/*         -webkit-border-radius: 2em;
-      -moz-border-radius: 2em;
-      border-radius: 2em */
+  @keyframes bg2 {
+    0% {
+      transform: translate(-50%, -50%) rotate(0);
+    }
+    100% {
+      transform: translate(-50%, -50%) rotate(360deg);
+    }
+    // 100% {
+    //   transform: translate(-50%, -50%) rotate(0deg);
+    // }
   }
 
-</style>
+  @keyframes bg3 {
+    0% {
+      transform: translate(-50%, -50%) scale(1);
+    }
+    50% {
+      transform: translate(-50%, -50%) scale(1.1);
+    }
+    100% {
+      transform: translate(-50%, -50%) scale(1);
+    }
+  }
 
-<style scoped="" lang="scss">
-  .yichang{
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    flex: 1;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    li{
-      list-style:none;
+  @keyframes bg3Img {
+    0% {
+      transform: translate(-50%, -50%) scale(1);
+    }
+    50% {
+      transform: translate(-50%, -50%) scale(0.8);
+    }
+    100% {
+      transform: translate(-50%, -50%) scale(1);
+    }
+  }
+  .mt2 {
+    flex: 4;
+    // background: #ccc;
+    position: relative;
+    .bg1 {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: url(~@static/static/bj.png) no-repeat center center;
+      background-size: 60% auto;
+    }
+    .bg2 {
+      position: absolute;
+      width: 8rem;
+      height: 4.3rem;
+      left: 50%;
+      top: 55%;
+      transform: translate(-50%, -50%);
+      background: url(~@static/static/ty.png) no-repeat center center;
+      background-size: 100% 100%;
+      // animation: bg2 4s linear infinite;
+    }
+    .bg3 {
+      position: absolute;
+      height: 2.375rem;
+      width: 2.1625rem;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      background: url(~@static/static/f.png) no-repeat center center;
+      background-size: 100% 100%;
+      animation: bg3 4s linear infinite;
+      text-align: center;
+      line-height: 2.375rem;
+      font-size: 0.2rem;
+      img {
+        width: 1.25rem;
+        height: 1.125rem;
+        position: absolute;
+        left: 50%;
+        top: 55%;
+        transform: translate(-50%, -50%);
+        animation: bg3Img 4s linear infinite;
+      }
+    }
+    .bg4 {
+      position: absolute;
+      width: 1.2875rem;
+      height: 100%;
+      left: 0;
+      top: 0;
+      background: url(~@static/static/L.png) no-repeat left top;
+      background-size: 100% 100%;
+    }
+    .bg5 {
+      position: absolute;
+      width: 1.2875rem;
+      height: 100%;
+      right: 0;
+      top: 0;
+      background: url(~@static/static/R.png) no-repeat right top;
+      background-size: 100% 100%;
+    }
+
+    .btn_list {
+      width: 6.25rem;
+      margin: 0 auto;
       display: flex;
-      padding: 0px 10px;
-      justify-content: space-between;
-      flex: 1;
-      align-items: center;
-      border-bottom: 1px solid #ebeef5;
-      max-height: 40px;
-      &:hover{
-        background-color: #eee;
+      position: relative;
+      z-index: 99;
+      margin-top: -0.25rem;
+      .btn {
+        flex: 1;
+        margin-right: 0.1875rem;
+        height: 0.5625rem;
+        background: url(~@static/static/d.png) no-repeat;
+        background-size: 100% 100%;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        padding: 0 0.125rem;
+        align-items: center;
+        color: #fff;
+        font-size: 0.2rem;
+        transition: all 0.1s;
+        &:hover {
+          transform: scale(1.1);
+        }
+        img {
+          width: 0.25rem;
+          height: 0.25rem;
+          margin-right: 0.0625rem;
+        }
+        &:last-child {
+          margin: 0;
+        }
+      }
+    }
+
+    @keyframes suspension1 {
+      0% {
+        transform: translateY(9%);
+      }
+      50% {
+        transform: translateY(19%);
+      }
+      100% {
+        transform: translateY(9%);
+      }
+    }
+
+    @keyframes suspension2 {
+      0% {
+        transform: translateY(19%);
+      }
+      50% {
+        transform: translateY(9%);
+      }
+      100% {
+        transform: translateY(19%);
+      }
+    }
+
+    @keyframes suspension3 {
+      0% {
+        transform: translateY(12%);
+      }
+      50% {
+        transform: translateY(0%);
+      }
+      100% {
+        transform: translateY(12%);
+      }
+    }
+
+    .suspension1 {
+      position: absolute;
+      left: 12%;
+      top: 9%;
+      display: flex;
+      animation: suspension1 3s linear infinite;
+      .data_box {
+        width: 0.75rem;
+        height: 0.75rem;
+        margin-right: 0.0625rem;
+        text-align: center;
+        line-height: 0.75rem;
+        background: url(~@static/static/q.png) no-repeat;
+        background-size: 100% 100%;
+      }
+      .tit_box {
+        color: #27caff;
+        display: flex;
+        flex-direction: column;
+        margin-top: 0.125rem;
+        .img2 {
+          margin-top: 0.0625rem;
+          width: 1.5rem;
+          height: auto;
+        }
+      }
+    }
+
+    .suspension2 {
+      position: absolute;
+      right: 9%;
+      top: 19%;
+      display: flex;
+      animation: suspension2 3s linear infinite;
+      .data_box {
+        width: 0.75rem;
+        height: 0.75rem;
+
+        text-align: center;
+        line-height: 0.75rem;
+        background: url(~@static/static/q.png) no-repeat;
+        background-size: 100% 100%;
+      }
+      .tit_box {
+        color: #27caff;
+        display: flex;
+        flex-direction: column;
+        margin-top: 0.125rem;
+        text-align: right;
+        margin-right: 0.0625rem;
+        .img2 {
+          margin-top: 0.0625rem;
+          width: 1.5rem;
+          height: auto;
+          transform: rotateY(180deg);
+        }
+      }
+    }
+
+    .suspension3 {
+      position: absolute;
+      left: 12%;
+      bottom: 12%;
+      display: flex;
+      animation: suspension3 3s linear infinite;
+      .data_box {
+        width: 0.75rem;
+        height: 0.75rem;
+        margin-right: 0.0625rem;
+        text-align: center;
+        line-height: 0.75rem;
+        background: url(~@static/static/q.png) no-repeat;
+        background-size: 100% 100%;
+      }
+      .tit_box {
+        color: #27caff;
+        display: flex;
+        flex-direction: column;
+        margin-top: 0.125rem;
+        .img2 {
+          margin-top: -0.375rem;
+          width: 1.5rem;
+          height: auto;
+          transform: rotateX(180deg);
+        }
       }
     }
   }
-</style>
-
-<style>
-  @media screen and (max-height: 850px) {
-    #chartFinish{
-
+  .mt3 {
+    flex: 2.5;
+    padding: 0.25rem;
+    .tit_box {
+      height: 0.625rem;
+      background: url(~@static/static/icon1.png) no-repeat bottom center;
+      background-size: 100% auto;
+      .tit {
+        display: flex;
+        img {
+          height: 0.25rem;
+          width: 0.15rem;
+          margin-right: 0.125rem;
+        }
+        span {
+          font-size: 0.25rem;
+          color: #fff;
+        }
+      }
     }
-    .home-row-up .el-table::-webkit-scrollbar{
-      width: 0;
-      transition: 0.2s;
-    }
-    .home-row-up .el-table:hover::-webkit-scrollbar{
-      width: 4px;
-    }
-    .home-row-up .el-table:hover::-webkit-scrollbar-track {
-        background-color: transparent;
-/*         -webkit-border-radius: 2em;
-        -moz-border-radius: 2em;
-        border-radius: 2em */
-    }
-    .home-row-up .el-table:hover::-webkit-scrollbar-thumb {
-        background-color: #42ADFF;
-/*         -webkit-border-radius: 2em;
-        -moz-border-radius: 2em;
-        border-radius: 2em */
-    }
-    #chartInspection{
-      /* height: 100%; */
-      min-height: 200px;
-      /* margin-top: 0px; */
+    .mtbox {
+      height: 4.5rem;
+      width: 100%;
     }
   }
+}
+
+.mainb {
+  display: flex;
+  padding: 0.25rem;
+  .mbbox {
+    flex: 1;
+    height: 5rem;
+    margin-right: 0.25rem;
+    &:last-child {
+      margin-right: 0;
+    }
+    .tit_box {
+      height: 0.625rem;
+      background: url(~@static/static/icon1.png) no-repeat bottom center;
+      background-size: 100% auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      .tit {
+        display: flex;
+        img {
+          height: 0.25rem;
+          width: 0.15rem;
+          margin-right: 0.125rem;
+        }
+        span {
+          font-size: 0.25rem;
+          color: #fff;
+        }
+      }
+      .btn_box {
+        display: flex;
+        .titr_btn {
+          background: #331f33;
+          text-align: center;
+          height: 0.35rem;
+          width: 0.75rem;
+          margin-right: 0.0625rem;
+          line-height: 0.35rem;
+          border: 1px solid #1f9ecc;
+          color: #1f9ecc;
+          cursor: pointer;
+          &:last-child {
+            margin-right: 0;
+          }
+        }
+      }
+    }
+    .cheart_box {
+      height: 4.375rem;
+      width: 100%;
+    }
+  }
+}
 </style>

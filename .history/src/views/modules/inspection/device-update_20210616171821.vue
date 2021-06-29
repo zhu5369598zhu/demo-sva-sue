@@ -92,23 +92,22 @@
                   </el-col>
                   <el-col :span="8">
                     <el-form-item label="设备等级:" prop="deviceLevel">
-                      <div class="formHeader">
-                        <el-select
-                          v-model="dataForm.deviceLevel"
-                          placeholder="设备等级"
-                          :disabled="!isModify"
-                          clearable
-                          size="mini"
+                      <el-select
+                        v-model="dataForm.deviceLevel"
+                        placeholder="设备等级"
+                        :disabled="!isModify"
+                        clearable
+                        style="width: 140px"
+                        size="mini"
+                      >
+                        <el-option
+                          v-for="item in deviceLevelList"
+                          :key="item.id"
+                          :label="item.name"
+                          :value="item.id"
                         >
-                          <el-option
-                            v-for="item in deviceLevelList"
-                            :key="item.id"
-                            :label="item.name"
-                            :value="item.id"
-                          >
-                          </el-option>
-                        </el-select>
-                      </div>
+                        </el-option>
+                      </el-select>
                     </el-form-item>
                   </el-col>
                   <el-col :span="8">
@@ -138,7 +137,6 @@
                         placeholder="点击选择所属机构"
                         class="dept-list__input"
                         size="mini"
-                        style="width: 140px"
                       ></el-input>
                     </el-form-item>
                   </el-col>
@@ -266,6 +264,7 @@
                   </el-col>
                 </el-row>
 
+
                 <!-- 动态添加项目 -->
                 <!-- 不止一个项目，用div包裹起来  定义了dataForm.dynamiCItem这个下边请求就的用它接 -->
                 <div v-for="(item, index) in dataForm.dynamicItem" :key="index">
@@ -333,7 +332,7 @@
                       ></el-switch>
                     </el-form-item>
                   </el-col>
-                  <el-col :span="8">
+                  <el-col :span="6">
                     <el-form-item label="看板显示:" prop="isShowDashboard">
                       <el-switch
                         v-model="dataForm.isShowDashboard"
@@ -343,7 +342,7 @@
                       ></el-switch>
                     </el-form-item>
                   </el-col>
-                  <el-col :span="8">
+                   <el-col :span="8">
                     <el-form-item
                       label="点检卡码:"
                       prop="cardCode"
@@ -523,13 +522,11 @@
                       >新增</el-button
                     >
                   </el-form-item>
+                  
                 </el-col>
                 <el-col :span="2">
                   <el-form-item>
-                    <el-button
-                      @click="repairDeleteHandle()"
-                      :disabled="repairListSelections.length <= 0"
-                      type="primary"
+                    <el-button @click="repairDeleteHandle()" :disabled="repairListSelections.length <= 0" type="primary"
                       >删除</el-button
                     >
                   </el-form-item>
@@ -544,12 +541,11 @@
               highlight-current-row
               style="width: 100%"
             >
-              <el-table-column
+               <el-table-column
                 type="selection"
                 header-align="center"
                 align="center"
-                width="50"
-              >
+                width="50">
               </el-table-column>
               <el-table-column
                 prop="type"
@@ -609,8 +605,7 @@
               >
                 <template slot-scope="scope">
                   <el-button
-                    type="text"
-                    size="mini"
+                     type="text" size="mini"
                     @click="handleNewRepair(scope.row.id)"
                     >修改</el-button
                   >
@@ -633,24 +628,19 @@
             <!-- 上面是第一个页面下面是二个 -->
             <p>检修记录</p>
             <hr />
-            <el-form>
+             <el-form>
               <el-row>
                 <el-col :span="2">
                   <el-form-item>
-                    <el-button
-                      v-if="isAuth('inspection:repairrecord:save')"
-                      @click="handleNewRecord()"
-                      type="primary"
+                    <el-button v-if="isAuth('inspection:repairrecord:save')"  @click="handleNewRecord()" type="primary"
                       >新增</el-button
                     >
                   </el-form-item>
+                  
                 </el-col>
                 <el-col :span="2">
                   <el-form-item>
-                    <el-button
-                      @click="recordDeleteHandle()"
-                      :disabled="recordListSelections.length <= 0"
-                      type="primary"
+                    <el-button @click="recordDeleteHandle()" :disabled="recordListSelections.length <= 0" type="primary"
                       >删除</el-button
                     >
                   </el-form-item>
@@ -665,19 +655,18 @@
               </el-row>
             </el-form>
             <el-table
-              height="360"
+               height="360"
               :data="recordList"
               border
               @selection-change="recordSelectionChangeHandle"
               highlight-current-row
               style="width: 100%"
             >
-              <el-table-column
+             <el-table-column
                 type="selection"
                 header-align="center"
                 align="center"
-                width="50"
-              >
+                width="50">
               </el-table-column>
               <el-table-column
                 prop="repairNum"
@@ -736,10 +725,9 @@
                 width="150"
                 label="操作"
               >
-                <template slot-scope="scope">
-                  <el-button
-                    type="text"
-                    size="mini"
+               <template slot-scope="scope">
+                   <el-button
+                   type="text" size="mini"
                     @click="handleNewRecord(scope.row.id)"
                     >修改</el-button
                   >
@@ -765,7 +753,7 @@
               ref="addOrUpdate"
               @refreshDataList="getRepairList"
             ></add-or-update>
-            <add-update
+             <add-update
               v-if="addUpdateVisible"
               ref="addUpdate"
               @refreshDataList="getRecordList"
@@ -820,7 +808,7 @@
 
 
 <script>
-import { formatDate } from "@/utils";
+ import { formatDate } from '@/utils'
 import { treeDataTranslate } from "@/utils";
 import deviceDocument from "@/components/device/document";
 import orderDevice from "@/components/device/orderdevice";
@@ -862,8 +850,8 @@ export default {
       startDatePicker: this.beginDate(),
       hasInspectionData: false,
       inspectionCategory: [],
-      repairListSelections: [],
-      recordListSelections: [],
+      repairListSelections:[],
+      recordListSelections:[],
       inspectionSeries: [],
       repairTotalPage: 0,
       repairPageIndex: 1,
@@ -898,7 +886,7 @@ export default {
         createTime: "",
         itemId: 0,
         itemName: "",
-        propertyName: "",
+        propertyName: '',
         inspectionStartTime: "",
         inspectionEndTime: "",
         dynamicItem: [],
@@ -1022,9 +1010,9 @@ export default {
       }
     },
 
-    repairSelectionChangeHandle(val) {
-      this.repairListSelections = val;
-    },
+      repairSelectionChangeHandle (val) {
+        this.repairListSelections = val
+      },
     // 获取数据列表
     getRepairList() {
       this.$http({
@@ -1084,74 +1072,59 @@ export default {
     },
     // 操作对象新增 第一个页面从这里传值
     handleNewRepair(id) {
-      console.log(id);
+      console.log(id)
       //什么也没传为什么会有值呢
       // return
       this.addOrUpdateVisible = true;
       this.$nextTick(() => {
         // this.$refs.addOrUpdate.getRepairList()
-        this.$refs.addOrUpdate.init(id, this.dataForm.deviceId);
+        this.$refs.addOrUpdate.init(id,this.dataForm.deviceId)
       });
     },
-    formatJson(filterVal, jsonData) {
-      return jsonData.map((v) => filterVal.map((j) => v[j]));
-    },
-    exportToExcel(list) {
-      this.downloadLoading = true;
-      require.ensure([], () => {
-        const { export_json_to_excel } = require("@/vendor/Export2Excel");
-        const tHeader = [
-          "编号<repair_num>",
-          "检修类别<type>",
-          "开始时间<create_time>",
-          "结束时间<end_time>",
-          "检修内容<content>",
-          "更换部件<parts>",
-          "检修负责人<principal>",
-        ];
-        const filterVal = [
-          "repairNum",
-          "type",
-          "createTime",
-          "endTime",
-          "content",
-          "parts",
-          "principal",
-        ];
-        const data = this.formatJson(filterVal, list);
-        let filename = formatDate(new Date(), "yyyyMMddhhmmss");
-        export_json_to_excel({
-          header: tHeader,
-          data,
-          filename: filename,
-          autoWidth: true,
-          bookType: "xlsx",
-        });
-        this.downloadLoading = false;
-      });
-    },
+        formatJson (filterVal, jsonData) {
+        return jsonData.map(v => filterVal.map(j => v[j]))
+      },
+      exportToExcel (list) {
+        this.downloadLoading = true
+        require.ensure([], () => {
+          const { export_json_to_excel } = require('@/vendor/Export2Excel')
+          const tHeader = ['编号<repair_num>', '检修类别<type>', '开始时间<create_time>', '结束时间<end_time>','检修内容<content>', '更换部件<parts>', '检修负责人<principal>']
+          const filterVal = ['repairNum', 'type', 'createTime', 'endTime', 'content', 'parts', 'principal']
+          const data = this.formatJson(filterVal, list)
+          let filename = formatDate(new Date(), 'yyyyMMddhhmmss')
+          export_json_to_excel({
+            header: tHeader,
+            data,
+            filename: filename,
+            autoWidth: true,
+            bookType: 'xlsx'
+          })
+          this.downloadLoading = false
+        })
+      },
 
-    exportExcelHandle() {
-      this.$http({
-        url: this.$http.adornUrl("/inspection/repairrecord/export"),
-        method: "get",
-        params: this.$http.adornParams({
-          deviceId: this.dataForm.deviceId,
-        }),
-      }).then(({ data }) => {
-        if (data && data.code === 0) {
-          this.exportToExcel(data.list);
-        } else {
-          this.$message.error(data.msg);
-        }
-      });
-    },
 
-    recordSelectionChangeHandle(val) {
-      this.recordListSelections = val;
-    },
+     exportExcelHandle () {
+        this.$http({
+          url: this.$http.adornUrl('/inspection/repairrecord/export'),
+          method: 'get',
+          params: this.$http.adornParams({
+            'deviceId': this.dataForm.deviceId
+          })
+        }).then(({data}) => {
+          if (data && data.code === 0) {
+            this.exportToExcel(data.list)
+          } else {
+            this.$message.error(data.msg)
+          }
+        })
+      },
 
-    recordDeleteHandle(id) {
+   recordSelectionChangeHandle (val) {
+        this.recordListSelections = val
+      },
+
+   recordDeleteHandle(id) {
       var ids = id
         ? [id]
         : this.recordListSelections.map((item) => {
@@ -1186,7 +1159,7 @@ export default {
         });
       });
     },
-
+    
     getRecordList() {
       this.$http({
         url: this.$http.adornUrl("/inspection/repairrecord/list"),
@@ -1208,15 +1181,16 @@ export default {
       });
     },
 
-    // 第二个
+// 第二个
     handleNewRecord(id) {
+      
       this.addUpdateVisible = true;
       this.$nextTick(() => {
         // this.$refs.addOrUpdate.getRepairList()
-        this.$refs.addUpdate.init(id, this.dataForm.deviceId);
+        this.$refs.addUpdate.init(id,this.dataForm.deviceId)
       });
     },
-    // 每页数
+     // 每页数
     sizeChangeHandle(val) {
       this.recordPageSize = val;
       this.recordPageIndex = 1;
@@ -1227,7 +1201,7 @@ export default {
       this.recordPageIndex = val;
       this.getRecordList();
     },
-
+    
     //在之前上传
     onBeforeUpload(file) {
       const isIMAGE = file.type === "image/jpeg" || "image/gif" || "image/png";
@@ -1657,7 +1631,7 @@ export default {
 }
 .device-update .el-dialog__body {
   padding-left: 0px;
-  padding-top: 0px;
+  padding-top: 20px;
   padding-right: 0px;
   padding-bottom: 0px;
 }
@@ -1668,8 +1642,5 @@ export default {
 }
 .repair-footer {
   margin: 30px;
-}
-.formHeader .el-input {
-  width: 140px;
 }
 </style>

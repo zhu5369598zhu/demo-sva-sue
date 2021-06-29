@@ -54,7 +54,7 @@
       // 获取数据列表
       getUserList () {
         this.$http({
-          url: this.$http.adornUrl(`/sys/user/selectParentDeptUsersByDept`),
+          url: this.$http.adornUrl(`/sys/user/selectByDept`),
           method: 'get',
           params: this.$http.adornParams({
             'deptId': this.dataForm.deptId

@@ -705,7 +705,7 @@
       // 查询部门
       getDeptDataList () {
         this.$http({
-          url: this.$http.adornUrl('/sys/dept/list'),
+          url: this.$http.adornUrl('/sys/dept/lists'),
           method: 'get',
           params: this.$http.adornParams({'name': this.deptFrom.name})
         }).then(({data}) => {
@@ -906,13 +906,12 @@
             this.orderDataForm.requirementTime = data.orderdefective.requirementTime
             this.orderDataForm.defectiveDevice = data.orderdefective.defectiveDevice
           }
-          console.log(this.orderDataForm.orderConfirmerOpinion)
+          console.log("row.defectiveType====="+row.defectiveType)
+          console.log("row.orderStatus====="+row.orderStatus)
+
           if (row.defectiveType === 0) {
-            if (row.orderStatus === 2) {
-              this.dialogFourvisible = true
-            } else if (row.orderStatus === 3) {
-              this.dialogFivevisible = true
-            }
+              this.dialogzerovisible = true
+            
           } else {
             if (row.orderStatus === 0) { // 拟制中
               this.dialogzerovisible = true
