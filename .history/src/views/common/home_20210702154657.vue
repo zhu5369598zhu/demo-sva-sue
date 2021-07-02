@@ -117,7 +117,7 @@
               <span>故障率</span>
               <img class="img2" src="~@static/static/r_86.png" alt="" />
             </div>
-            <div id="missingInspect" class="data_box">77%</div>
+            <div id="missingInspectDiv" class="data_box">77%</div>
           </div>
         </div>
         <div class="mt3">
@@ -208,6 +208,7 @@ export default {
       carryOut: null, //完成
       fullscreen: false, //全屏
       purl: "",
+      userName: "",
       dynamicMenuRoutes: [],
       menuC: false,
     };
@@ -221,11 +222,9 @@ export default {
   components: {},
 
   computed: {
-    userName: {
-      get() {
-        return this.$store.state.user.name;
-      },
-    },
+    // userName: {
+    //   get () { return this.$store.state.user.name }
+    // },
     menuList: {
       get() {
         return this.$store.state.common.menuList;
@@ -362,7 +361,7 @@ export default {
         legend: {
           bottom: "5%",
           left: "center",
-          data: ["运行", "备用", "检修", "其他"],
+          data: ["总数", "运行", "备用", "检修", "其他"],
           textStyle: {
             // color: '#24dcf7',
             color: "#ffffff",
@@ -403,7 +402,7 @@ export default {
               show: false,
             },
             data: [
-              // { value: bdata.sum, name: "总数" },
+              { value: bdata.sum, name: "总数" },
               { value: bdata.run, name: "运行" },
               { value: bdata.standby, name: "备用" },
               { value: bdata.overhaul, name: "检修" },
@@ -440,7 +439,6 @@ export default {
           $("#inspectedDiv").html(inspectedRate);
           $("#missingInspectDiv").html(missingInspectRate);
           $("#absenceDiv").html(absenceRate);
-          $("#missingInspect").html(exceptionRate);
         } else {
           return;
         }
@@ -588,11 +586,9 @@ export default {
         },
         yAxis: {
           type: "value",
-          axisLine: {
-            lineStyle: {
-              color: "rgba(215,215,255,.5)",
-            },
-          },
+          // axisLine: {
+          //   show: false,
+          // },
           axisLabel: {
             color: "#fff",
             fontSize: "12",
@@ -693,9 +689,7 @@ export default {
         yAxis: {
           type: "value",
           axisLine: {
-            lineStyle: {
-              color: "rgba(215,215,255,.5)",
-            },
+            show: false,
           },
           axisLabel: {
             color: "#fff",
@@ -1364,7 +1358,7 @@ export default {
     .suspension4 {
       position: absolute;
       right: 7%;
-      bottom: 6%;
+      bottom: 19%;
       display: flex;
       animation: suspension2 3s linear infinite;
       .data_box {
@@ -1384,10 +1378,10 @@ export default {
         text-align: right;
         margin-right: 0.0625rem;
         .img2 {
-          margin-top: -0.38rem;
+          margin-top: 0.0625rem;
           width: 1.5rem;
           height: auto;
-          transform: rotateY(180deg) rotateX(180deg);
+          transform: rotateY(180deg);
         }
       }
     }

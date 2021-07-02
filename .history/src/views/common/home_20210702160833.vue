@@ -440,7 +440,7 @@ export default {
           $("#inspectedDiv").html(inspectedRate);
           $("#missingInspectDiv").html(missingInspectRate);
           $("#absenceDiv").html(absenceRate);
-          $("#missingInspect").html(exceptionRate);
+           $("#missingInspect").html(exceptionRate);
         } else {
           return;
         }

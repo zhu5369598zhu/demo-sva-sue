@@ -117,7 +117,7 @@
               <span>故障率</span>
               <img class="img2" src="~@static/static/r_86.png" alt="" />
             </div>
-            <div id="missingInspect" class="data_box">77%</div>
+            <div id="missingInspectDiv" class="data_box">77%</div>
           </div>
         </div>
         <div class="mt3">
@@ -222,9 +222,7 @@ export default {
 
   computed: {
     userName: {
-      get() {
-        return this.$store.state.user.name;
-      },
+      get () { return this.$store.state.user.name }
     },
     menuList: {
       get() {
@@ -362,7 +360,7 @@ export default {
         legend: {
           bottom: "5%",
           left: "center",
-          data: ["运行", "备用", "检修", "其他"],
+          data: [ "运行", "备用", "检修", "其他"],
           textStyle: {
             // color: '#24dcf7',
             color: "#ffffff",
@@ -440,7 +438,6 @@ export default {
           $("#inspectedDiv").html(inspectedRate);
           $("#missingInspectDiv").html(missingInspectRate);
           $("#absenceDiv").html(absenceRate);
-          $("#missingInspect").html(exceptionRate);
         } else {
           return;
         }
@@ -589,7 +586,7 @@ export default {
         yAxis: {
           type: "value",
           axisLine: {
-            lineStyle: {
+                        lineStyle: {
               color: "rgba(215,215,255,.5)",
             },
           },
@@ -693,9 +690,7 @@ export default {
         yAxis: {
           type: "value",
           axisLine: {
-            lineStyle: {
-              color: "rgba(215,215,255,.5)",
-            },
+            show: false,
           },
           axisLabel: {
             color: "#fff",

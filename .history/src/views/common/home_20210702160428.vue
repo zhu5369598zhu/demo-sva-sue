@@ -117,7 +117,7 @@
               <span>故障率</span>
               <img class="img2" src="~@static/static/r_86.png" alt="" />
             </div>
-            <div id="missingInspect" class="data_box">77%</div>
+            <div id="missingInspectDiv" class="data_box">77%</div>
           </div>
         </div>
         <div class="mt3">
@@ -440,7 +440,6 @@ export default {
           $("#inspectedDiv").html(inspectedRate);
           $("#missingInspectDiv").html(missingInspectRate);
           $("#absenceDiv").html(absenceRate);
-          $("#missingInspect").html(exceptionRate);
         } else {
           return;
         }
