@@ -40,7 +40,9 @@
             {{ userName }}
           </span>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item @click.native="updatePasswordHandle()" style="color: #333"
+            <el-dropdown-item
+              @click.native="updatePasswordHandle()"
+              style="color: #333"
               >修改密码</el-dropdown-item
             >
             <el-dropdown-item @click.native="logoutHandle()" style="color: #333"
@@ -72,25 +74,25 @@
           <div class="bg4"></div>
           <div class="bg5"></div>
           <div class="btn_list">
-            <div class="btn">
+            <div @click="getDataList('date')" key="" class="btn">
               <img src="~@static/static/s.png" alt="" />
               <span>本日</span>
             </div>
-            <div class="btn">
+            <div @click="getDataList('week')" class="btn">
               <img src="~@static/static/s.png" alt="" />
               <span>本周</span>
             </div>
-            <div class="btn">
+            <div @click="getDataList('month')" class="btn">
               <img src="~@static/static/s.png" alt="" />
               <span>本月</span>
             </div>
-            <div class="btn">
+            <div @click="getDataList('year')" class="btn">
               <img src="~@static/static/s.png" alt="" />
               <span>本年</span>
             </div>
           </div>
           <div class="suspension1">
-            <div class="data_box">77%</div>
+            <div id="inspectedDiv" class="data_box">77%</div>
             <div class="tit_box">
               <span>完成率</span>
               <img class="img2" src="~@static/static/r_86.png" alt="" />
@@ -101,10 +103,10 @@
               <span>漏检率</span>
               <img class="img2" src="~@static/static/r_86.png" alt="" />
             </div>
-            <div class="data_box">77%</div>
+            <div id="missingInspectDiv" class="data_box">77%</div>
           </div>
           <div class="suspension3">
-            <div class="data_box">77%</div>
+            <div id="absenceDiv" class="data_box">77%</div>
             <div class="tit_box">
               <span>缺勤率</span>
               <img class="img2" src="~@static/static/r_86.png" alt="" />
@@ -129,9 +131,9 @@
               <span>设备异常趋势</span>
             </div>
             <div class="btn_box">
-              <div class="titr_btn">周</div>
-              <div class="titr_btn">月</div>
-              <div class="titr_btn">年</div>
+              <div @click="getAbnormalTrend('week')" class="titr_btn">周</div>
+              <div @click="getAbnormalTrend('month')" class="titr_btn">月</div>
+              <div @click="getAbnormalTrend('year')" class="titr_btn">年</div>
             </div>
           </div>
           <div class="cheart_box" id="abnormalTrend"></div>
@@ -143,9 +145,9 @@
               <span>巡检完成率趋势</span>
             </div>
             <div class="btn_box">
-              <div class="titr_btn">周</div>
-              <div class="titr_btn">月</div>
-              <div class="titr_btn">年</div>
+              <div @click="getCarryOut('week')" class="titr_btn">周</div>
+              <div @click="getCarryOut('month')" class="titr_btn">月</div>
+              <div @click="getCarryOut('year')" class="titr_btn">年</div>
             </div>
           </div>
           <div class="cheart_box" id="carryOut"></div>
@@ -171,9 +173,9 @@
               <span>漏检周期表</span>
             </div>
             <div class="btn_box">
-              <div class="titr_btn">周</div>
-              <div class="titr_btn">月</div>
-              <div class="titr_btn">年</div>
+              <div @click="getMissed('week')" class="titr_btn">周</div>
+              <div @click="getMissed('month')" class="titr_btn">月</div>
+              <div @click="getMissed('year')" class="titr_btn">年</div>
             </div>
           </div>
           <div class="cheart_box" id="missed"></div>
@@ -229,13 +231,13 @@ export default {
   beforeCreate() {},
 
   mounted() {
-    this.getDeviceStatus();//设备状态
-    this.getAbnormalTrend();//异常趋势
-    this.getAbsent('week');//缺勤周期
-    this.getMissed();//漏检周期
-    this.getAbnormal();//异常排名
-    this.getCarryOut();//完成率
-
+    this.getDeviceStatus(); //设备状态
+    this.getAbnormalTrend("week"); //异常趋势
+    this.getAbsent("week"); //缺勤周期
+    this.getMissed("week"); //漏检周期
+    this.getAbnormal(); //异常排名
+    this.getCarryOut("week"); //完成率
+    this.getDataList("date");
   },
   activated() {
     if (this.deviceStatusLine) {
@@ -259,8 +261,7 @@ export default {
   },
 
   methods: {
-
-      updatePasswordHandle() {
+    updatePasswordHandle() {
       this.updatePassowrdVisible = true;
       this.$nextTick(() => {
         this.$refs.updatePassowrd.init();
@@ -333,18 +334,18 @@ export default {
       }
       this.fullscreen = !this.fullscreen;
     },
-    async getDeviceStatus() { //设备状态
-      let bdata = ''
+    async getDeviceStatus() {
+      //设备状态
+      let bdata = "";
       await this.$http({
         url: this.$http.adornUrl("/inspection/device/getDeviceStatus"),
         method: "get",
       }).then(({ data }) => {
         if (data && data.code === 0) {
-          bdata = data.list[0]
+          bdata = data.list[0];
         } else {
         }
       });
-      console.log(bdata)
       //设备状态
       var option = {
         tooltip: {
@@ -411,38 +412,54 @@ export default {
         this.deviceStatusLine.resize();
       });
     },
-   getDataList() {  //巡检看板
+    getDataList(flag) {
+      //巡检看板
       this.$http({
-        url: this.$http.adornUrl("/dataAnalysis/homeDataAnalysis/inspectionBoardData"),
+        url: this.$http.adornUrl(
+          "/dataAnalysis/homeDataAnalysis/inspectionBoardData"
+        ),
         method: "get",
         params: this.$http.adornParams({
-        //需要 本日 本周 本月 本年参数
+          //需要 本日 本周 本月 本年参数
+          flag: flag,
         }),
       }).then(({ data }) => {
         if (data && data.code === 0) {
-         
+          var inspectedRate = data.data.inspectedRate;
+          var missingInspectRate = data.data.missingInspectRate;
+          var absenceRate = data.data.absenceRate;
+          var exceptionRate = data.data.exceptionRate;
+          $("#inspectedDiv").html(inspectedRate);
+          $("#missingInspectDiv").html(missingInspectRate);
+          $("#absenceDiv").html(absenceRate);
         } else {
-          
+          return;
         }
       });
     },
 
-    getAbnormal() { //异常排名
+    getAbnormal() {
+      //异常排名
       this.$http({
-        url: this.$http.adornUrl("/inspection/device/getexceptiontop"),
+        url: this.$http.adornUrl(
+          "/dataAnalysis/homeDataAnalysis/getdeviceexception"
+        ),
         method: "get",
         params: this.$http.adornParams({
           //
         }),
       }).then(({ data }) => {
         if (data && data.code === 0) {
-          this.dataList = data.page.list;
-          this.totalPage = data.page.totalCount;
+          var deviceNameData = data.data.deviceName;
+          var exceptionDeviceData = data.data.num;
+          this.drawAbnormalChar(deviceNameData, exceptionDeviceData);
         } else {
           this.dataList = [];
           this.totalPage = 0;
         }
       });
+    },
+    drawAbnormalChar(deviceNameData, exceptionDeviceData) {
       //异常排名
       var option = {
         tooltip: {
@@ -463,13 +480,7 @@ export default {
         },
         yAxis: {
           type: "category",
-          data: [
-            "No.1 异常名称",
-            "No.1 异常名称",
-            "No.1 异常名称",
-            "No.1 异常名称",
-            "No.1 异常名称",
-          ],
+          data: deviceNameData,
           axisLine: {
             show: false,
           },
@@ -482,9 +493,9 @@ export default {
         },
         series: [
           {
-            name: "2011年",
+            name: "异常数",
             type: "bar",
-            data: [18203, 23489, 29034, 104970, 131744],
+            data: exceptionDeviceData,
             showBackground: true,
             backgroundStyle: {
               color: "rgba(180, 180, 180, 0.2)",
@@ -496,11 +507,6 @@ export default {
               },
             },
           },
-          // {
-          //   name: '2012年',
-          //   type: 'bar',
-          //   data: [19325, 23438, 31000, 121594, 134141, 681807]
-          // }
         ],
       };
       this.abnormal = echarts.init(document.getElementById("abnormal"));
@@ -509,22 +515,29 @@ export default {
         this.abnormal.resize();
       });
     },
-    getAbnormalTrend() {
+    getAbnormalTrend(flag) {
       //异常趋势
 
-       this.$http({
-        url: this.$http.adornUrl("/dataAnalysis/homeDataAnalysis/deviceExceptionTrendData"),
+      this.$http({
+        url: this.$http.adornUrl(
+          "/dataAnalysis/homeDataAnalysis/deviceExceptionTrendData"
+        ),
         method: "get",
         params: this.$http.adornParams({
-           //需要  本周 本月 本年参数
+          //需要  本周 本月 本年参数
+          flag: flag,
         }),
       }).then(({ data }) => {
         if (data && data.code === 0) {
-        
+          var xAxisData = data.data.xAxis;
+          var seriesData = data.data.series;
+          this.drawAbnormalTrendChar(xAxisData, seriesData);
         } else {
-          
+          return;
         }
       });
+    },
+    drawAbnormalTrendChar(xAxisData, seriesData) {
       var option = {
         // title: {
         //   text: '折线图堆叠'
@@ -535,7 +548,7 @@ export default {
         legend: {
           right: 0,
           top: "10%",
-          data: ["邮件营销", "联盟广告"],
+          data: ["设备异常"],
           textStyle: {
             color: "#fff",
           },
@@ -550,7 +563,7 @@ export default {
         xAxis: {
           type: "category",
           boundaryGap: false,
-          data: ["1月", "2月", "3月", "4月", "5月", "6月", "7月"],
+          data: xAxisData,
           axisLabel: {
             color: "#fff",
             fontSize: "12",
@@ -566,9 +579,9 @@ export default {
         },
         yAxis: {
           type: "value",
-          axisLine: {
-            show: false,
-          },
+          // axisLine: {
+          //   show: false,
+          // },
           axisLabel: {
             color: "#fff",
             fontSize: "12",
@@ -586,17 +599,9 @@ export default {
         },
         series: [
           {
-            name: "邮件营销",
+            name: "设备异常",
             type: "line",
-            data: [120, 182, 101, 134, 90, 230, 210],
-            lineStyle: {
-              color: "#00FF00",
-            },
-          },
-          {
-            name: "联盟广告",
-            type: "line",
-            data: [220, 182, 191, 234, 290, 330, 310],
+            data: seriesData,
             lineStyle: {
               color: "#00FF00",
             },
@@ -612,32 +617,40 @@ export default {
       });
     },
 
-    getCarryOut() {
-      //完成趋势
-       this.$http({
-        url: this.$http.adornUrl("/dataAnalysis/homeDataAnalysis/inspectedRateTrendData"),
+    getCarryOut(flag) {
+      //完成率趋势
+      this.$http({
+        url: this.$http.adornUrl(
+          "/dataAnalysis/homeDataAnalysis/inspectedRateTrendData"
+        ),
         method: "get",
         params: this.$http.adornParams({
-           //需要 本周 本月 本年参数
+          //需要 本周 本月 本年参数
+          flag: flag,
         }),
       }).then(({ data }) => {
         if (data && data.code === 0) {
-         
+          var xAxisData = data.data.xAxis;
+          var seriesData = data.data.series;
+          this.drawCarryOutChar(xAxisData, seriesData);
         } else {
-         
+          return;
         }
       });
+    },
+    drawCarryOutChar(xAxisData, seriesData) {
       var option = {
         // title: {
         //   text: '折线图堆叠'
         // },
         tooltip: {
           trigger: "axis",
+          formatter: "{c}%",
         },
         legend: {
           right: 0,
           top: "10%",
-          data: ["邮件营销", "联盟广告"],
+          data: ["完成率"],
           textStyle: {
             color: "#fff",
           },
@@ -652,7 +665,7 @@ export default {
         xAxis: {
           type: "category",
           boundaryGap: false,
-          data: ["1月", "2月", "3月", "4月", "5月", "6月", "7月"],
+          data: xAxisData,
           axisLabel: {
             color: "#fff",
             fontSize: "12",
@@ -688,17 +701,9 @@ export default {
         },
         series: [
           {
-            name: "邮件营销",
+            name: "完成率",
             type: "line",
-            data: [120, 182, 101, 134, 90, 230, 210],
-            lineStyle: {
-              color: "#00FF00",
-            },
-          },
-          {
-            name: "联盟广告",
-            type: "line",
-            data: [220, 182, 191, 234, 290, 330, 310],
+            data: seriesData,
             lineStyle: {
               color: "#00FF00",
             },
@@ -712,28 +717,28 @@ export default {
       });
     },
     getAbsent(flag) {
-      var xAxisData;
-      var seriesData;
       //缺勤周期表
-       this.$http({
-        url: this.$http.adornUrl("/dataAnalysis/homeDataAnalysis/inspectionAbsenceData"),
+      this.$http({
+        url: this.$http.adornUrl(
+          "/dataAnalysis/homeDataAnalysis/inspectionAbsenceData"
+        ),
         method: "get",
-        async : false,
+        async: false,
         params: this.$http.adornParams({
           //需要 本周 本月 本年参数
-          'flag' : flag
+          flag: flag,
         }),
       }).then(({ data }) => {
         if (data && data.code === 0) {
-          xAxisData = data.data.xAxis;
-          seriesData = data.data.series;
-          this.drawChar(xAxisData,seriesData);
+          var xAxisData = data.data.xAxis;
+          var seriesData = data.data.series;
+          this.drawAbsentChar(xAxisData, seriesData);
         } else {
-          return
+          return;
         }
       });
     },
-    drawChar(xAxisData,seriesData){
+    drawAbsentChar(xAxisData, seriesData) {
       var option = {
         color: ["#ffffff"],
         xAxis: {
@@ -759,11 +764,11 @@ export default {
               color: "rgba(215,215,255,.5)",
             },
           },
-          // axisLabel: {
-          //   color: "#fff",
-          //   fontSize: "12",
-          //   show: false,
-          // },
+          axisLabel: {
+            color: "#fff",
+            fontSize: "12",
+            // show: false,
+          },
           axisTick: {
             show: false,
             alignWithLabel: false,
@@ -814,31 +819,38 @@ export default {
       };
       this.absent = echarts.init(document.getElementById("absent"));
       this.absent.setOption(option);
-      
+
       window.addEventListener("resize", () => {
         this.absent.resize();
       });
     },
-    getMissed() {
+    getMissed(flag) {
       //漏检周期
-       this.$http({
-        url: this.$http.adornUrl("/dataAnalysis/homeDataAnalysis/missingInspectionData"),
+      this.$http({
+        url: this.$http.adornUrl(
+          "/dataAnalysis/homeDataAnalysis/missingInspectionData"
+        ),
         method: "get",
         params: this.$http.adornParams({
-       //需要 本周 本月 本年参数
+          //需要 本周 本月 本年参数
+          flag: flag,
         }),
       }).then(({ data }) => {
         if (data && data.code === 0) {
-         
+          var xAxisData = data.data.xAxis;
+          var seriesData = data.data.series;
+          this.drawMissChar(xAxisData, seriesData);
         } else {
-       
+          return;
         }
       });
+    },
+    drawMissChar(xAxisData, seriesData) {
       var option = {
         color: ["#ffffff"],
         xAxis: {
           type: "category",
-          data: ["1月", "2月", "3月", "4月", "5月", "6月"],
+          data: xAxisData,
           axisLabel: {
             color: "#fff",
             fontSize: "12",
@@ -862,7 +874,7 @@ export default {
           axisLabel: {
             color: "#fff",
             fontSize: "12",
-            show: false,
+            // show: false,
           },
           axisTick: {
             show: false,
@@ -902,7 +914,7 @@ export default {
                 ),
               },
             },
-            data: [120, 200, 150, 80, 70, 110, 130],
+            data: seriesData,
             type: "bar",
             barWidth: "20%",
           },
