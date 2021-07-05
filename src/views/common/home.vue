@@ -52,20 +52,20 @@
         </el-dropdown>
       </div>
     </div>
- 
+
     <div class="main">
-            <div class="panel_box">
+      <div class="panel_box">
         <div class="data_item">
           <div class="tit">设备总数</div>
           <div class="data">
-            <span class="txt1">{{equipmentAll}}</span>
+            <span class="txt1">{{ equipmentAll }}</span>
             台
           </div>
         </div>
         <div class="data_item">
           <div class="tit">故障台数</div>
           <div class="data">
-            <span class="txt1">{{equipmentMal}}</span>
+            <span class="txt1">{{ equipmentMal }}</span>
             台
           </div>
         </div>
@@ -79,9 +79,27 @@
               <span>设备分布</span>
             </div>
             <div class="btn_box">
-              <div @click="getAbnormalTrend('week')" class="titr_btn" :class="active5=='week'?'btnA':''">状态</div>
-              <div @click="getAbnormalTrend('month')" class="titr_btn" :class="active5=='month'?'btnA':''">等级</div>
-              <div @click="getAbnormalTrend('year')" class="titr_btn" :class="active5=='year'?'btnA':''">部门</div>
+              <div
+                @click="getDeviceGroupData('status')"
+                class="titr_btn"
+                :class="active5 == 'week' ? 'btnA' : ''"
+              >
+                状态
+              </div>
+              <div
+                @click="getDeviceGroupData('level')"
+                class="titr_btn"
+                :class="active5 == 'month' ? 'btnA' : ''"
+              >
+                等级
+              </div>
+              <div
+                @click="getDeviceGroupData('dept')"
+                class="titr_btn"
+                :class="active5 == 'year' ? 'btnA' : ''"
+              >
+                部门
+              </div>
             </div>
           </div>
           <div class="mtbox" id="deviceStatus"></div>
@@ -96,25 +114,42 @@
           <div class="bg4"></div>
           <div class="bg5"></div>
           <div class="btn_list">
-            <div @click="getDataList('date')" key="" class="btn" :class="active=='date'?'btnA':''">
+            <div
+              @click="getDataList('date')"
+              key=""
+              class="btn"
+              :class="active == 'date' ? 'btnA' : ''"
+            >
               <img src="~@static/static/s.png" alt="" />
               <span>本日</span>
             </div>
-            <div @click="getDataList('week')" class="btn" :class="active=='week'?'btnA':''">
+            <div
+              @click="getDataList('week')"
+              class="btn"
+              :class="active == 'week' ? 'btnA' : ''"
+            >
               <img src="~@static/static/s.png" alt="" />
               <span>本周</span>
             </div>
-            <div @click="getDataList('month')" class="btn" :class="active=='month'?'btnA':''">
+            <div
+              @click="getDataList('month')"
+              class="btn"
+              :class="active == 'month' ? 'btnA' : ''"
+            >
               <img src="~@static/static/s.png" alt="" />
               <span>本月</span>
             </div>
-            <div @click="getDataList('year')" class="btn" :class="active=='year'?'btnA':''">
+            <div
+              @click="getDataList('year')"
+              class="btn"
+              :class="active == 'year' ? 'btnA' : ''"
+            >
               <img src="~@static/static/s.png" alt="" />
               <span>本年</span>
             </div>
           </div>
           <div class="suspension1">
-            <div id="inspectedDiv" class="data_box">{{inspectedRate}}</div>
+            <div id="inspectedDiv" class="data_box">{{ inspectedRate }}</div>
             <div class="tit_box">
               <span>完成率</span>
               <img class="img2" src="~@static/static/r_86.png" alt="" />
@@ -125,10 +160,12 @@
               <span>漏检率</span>
               <img class="img2" src="~@static/static/r_86.png" alt="" />
             </div>
-            <div id="missingInspectDiv" class="data_box">{{missingInspectRate}}</div>
+            <div id="missingInspectDiv" class="data_box">
+              {{ missingInspectRate }}
+            </div>
           </div>
           <div class="suspension3">
-            <div id="absenceDiv" class="data_box">{{absenceRate}}</div>
+            <div id="absenceDiv" class="data_box">{{ absenceRate }}</div>
             <div class="tit_box">
               <span>缺勤率</span>
               <img class="img2" src="~@static/static/r_86.png" alt="" />
@@ -139,7 +176,7 @@
               <span>故障率</span>
               <img class="img2" src="~@static/static/r_86.png" alt="" />
             </div>
-            <div id="missingInspect" class="data_box">{{exceptionRate}}</div>
+            <div id="missingInspect" class="data_box">{{ exceptionRate }}</div>
           </div>
         </div>
         <div class="mt3">
@@ -160,9 +197,27 @@
               <span>设备异常趋势</span>
             </div>
             <div class="btn_box">
-              <div @click="getAbnormalTrend('week')" class="titr_btn" :class="active1=='week'?'btnA':''">周</div>
-              <div @click="getAbnormalTrend('month')" class="titr_btn" :class="active1=='month'?'btnA':''">月</div>
-              <div @click="getAbnormalTrend('year')" class="titr_btn" :class="active1=='year'?'btnA':''">年</div>
+              <div
+                @click="getAbnormalTrend('week')"
+                class="titr_btn"
+                :class="active1 == 'week' ? 'btnA' : ''"
+              >
+                周
+              </div>
+              <div
+                @click="getAbnormalTrend('month')"
+                class="titr_btn"
+                :class="active1 == 'month' ? 'btnA' : ''"
+              >
+                月
+              </div>
+              <div
+                @click="getAbnormalTrend('year')"
+                class="titr_btn"
+                :class="active1 == 'year' ? 'btnA' : ''"
+              >
+                年
+              </div>
             </div>
           </div>
           <div class="cheart_box" id="abnormalTrend"></div>
@@ -174,9 +229,27 @@
               <span>巡检完成率趋势</span>
             </div>
             <div class="btn_box">
-              <div @click="getCarryOut('week')" class="titr_btn" :class="active2=='week'?'btnA':''">周</div>
-              <div @click="getCarryOut('month')" class="titr_btn" :class="active2=='month'?'btnA':''">月</div>
-              <div @click="getCarryOut('year')" class="titr_btn" :class="active2=='year'?'btnA':''">年</div>
+              <div
+                @click="getCarryOut('week')"
+                class="titr_btn"
+                :class="active2 == 'week' ? 'btnA' : ''"
+              >
+                周
+              </div>
+              <div
+                @click="getCarryOut('month')"
+                class="titr_btn"
+                :class="active2 == 'month' ? 'btnA' : ''"
+              >
+                月
+              </div>
+              <div
+                @click="getCarryOut('year')"
+                class="titr_btn"
+                :class="active2 == 'year' ? 'btnA' : ''"
+              >
+                年
+              </div>
             </div>
           </div>
           <div class="cheart_box" id="carryOut"></div>
@@ -188,9 +261,27 @@
               <span>缺勤周期表</span>
             </div>
             <div class="btn_box">
-              <div @click="getAbsent('week')" class="titr_btn" :class="active3=='week'?'btnA':''">周</div>
-              <div @click="getAbsent('month')" class="titr_btn" :class="active3=='month'?'btnA':''">月</div>
-              <div @click="getAbsent('year')" class="titr_btn" :class="active3=='year'?'btnA':''">年</div>
+              <div
+                @click="getAbsent('week')"
+                class="titr_btn"
+                :class="active3 == 'week' ? 'btnA' : ''"
+              >
+                周
+              </div>
+              <div
+                @click="getAbsent('month')"
+                class="titr_btn"
+                :class="active3 == 'month' ? 'btnA' : ''"
+              >
+                月
+              </div>
+              <div
+                @click="getAbsent('year')"
+                class="titr_btn"
+                :class="active3 == 'year' ? 'btnA' : ''"
+              >
+                年
+              </div>
             </div>
           </div>
           <div class="cheart_box" id="absent"></div>
@@ -202,9 +293,27 @@
               <span>漏检周期表</span>
             </div>
             <div class="btn_box">
-              <div @click="getMissed('week')" class="titr_btn" :class="active4=='week'?'btnA':''">周</div>
-              <div @click="getMissed('month')" class="titr_btn" :class="active4=='month'?'btnA':''">月</div>
-              <div @click="getMissed('year')" class="titr_btn" :class="active4=='year'?'btnA':''">年</div>
+              <div
+                @click="getMissed('week')"
+                class="titr_btn"
+                :class="active4 == 'week' ? 'btnA' : ''"
+              >
+                周
+              </div>
+              <div
+                @click="getMissed('month')"
+                class="titr_btn"
+                :class="active4 == 'month' ? 'btnA' : ''"
+              >
+                月
+              </div>
+              <div
+                @click="getMissed('year')"
+                class="titr_btn"
+                :class="active4 == 'year' ? 'btnA' : ''"
+              >
+                年
+              </div>
             </div>
           </div>
           <div class="cheart_box" id="missed"></div>
@@ -231,18 +340,18 @@ export default {
       purl: "",
       dynamicMenuRoutes: [],
       menuC: false,
-      inspectedRate:'',
-      missingInspectRate:'',
-      absenceRate:'',
-      exceptionRate:'',
-      active:'date',
-      active1:'week',
-      active2:'week',
-      active3:'week',
-      active4:'week',
-      active5:'week',
-      equipmentAll:666,//设备总数
-      equipmentMal:5,//设备故障数
+      inspectedRate: "",
+      missingInspectRate: "",
+      absenceRate: "",
+      exceptionRate: "",
+      active: "date",
+      active1: "week",
+      active2: "week",
+      active3: "week",
+      active4: "week",
+      active5: "week",
+      equipmentAll: "", //设备总数
+      equipmentMal: "", //设备故障数
     };
   },
   created() {
@@ -272,6 +381,7 @@ export default {
   beforeCreate() {},
 
   mounted() {
+    this.getDeviceData();
     this.getDeviceGroupData("status"); //分组设备环状图
     this.getAbnormalTrend("week"); //异常趋势
     this.getAbsent("week"); //缺勤周期
@@ -375,6 +485,21 @@ export default {
       }
       this.fullscreen = !this.fullscreen;
     },
+    getDeviceData() {
+      this.$http({
+        url: this.$http.adornUrl(
+          "/dataAnalysis/homeDataAnalysis/getDeviceData"
+        ),
+        method: "get",
+      }).then(({ data }) => {
+        if (data && data.code === 0) {
+          this.equipmentAll = data.data.deviceCount;
+          this.equipmentMal = data.data.exceptionDeviceCount;
+          this.drawDeviceDataChar(deviceData, deviceGroupName);
+        } else {
+        }
+      });
+    },
     getDeviceGroupData(flag) {
       this.$http({
         url: this.$http.adornUrl(
@@ -455,7 +580,7 @@ export default {
       });
     },
     getDataList(flag) {
-      this.active = flag
+      this.active = flag;
       //巡检看板
       this.$http({
         url: this.$http.adornUrl(
@@ -472,7 +597,6 @@ export default {
           this.missingInspectRate = data.data.missingInspectRate;
           this.absenceRate = data.data.absenceRate;
           this.exceptionRate = data.data.exceptionRate;
-        
         } else {
           return;
         }
@@ -528,10 +652,10 @@ export default {
           axisTick: {
             show: false,
           },
-          offset:150,
+          offset: 150,
           axisLabel: {
             color: "#24dcf7",
-            align: 'left',
+            align: "left",
           },
         },
         series: [
@@ -560,7 +684,7 @@ export default {
     },
     getAbnormalTrend(flag) {
       //异常趋势
-      this.active1 = flag
+      this.active1 = flag;
       this.$http({
         url: this.$http.adornUrl(
           "/dataAnalysis/homeDataAnalysis/deviceExceptionTrendData"
@@ -663,7 +787,7 @@ export default {
     },
 
     getCarryOut(flag) {
-      this.active2 = flag
+      this.active2 = flag;
       //完成率趋势
       this.$http({
         url: this.$http.adornUrl(
@@ -765,7 +889,7 @@ export default {
       });
     },
     getAbsent(flag) {
-      this.active3 = flag
+      this.active3 = flag;
       //缺勤周期表
       this.$http({
         url: this.$http.adornUrl(
@@ -874,7 +998,7 @@ export default {
       });
     },
     getMissed(flag) {
-      this.active4 = flag
+      this.active4 = flag;
       //漏检周期
       this.$http({
         url: this.$http.adornUrl(
@@ -1155,7 +1279,7 @@ export default {
           color: #fff;
         }
       }
-            .btn_box {
+      .btn_box {
         display: flex;
         .titr_btn {
           background: #331f33;
@@ -1170,7 +1294,7 @@ export default {
           &:last-child {
             margin-right: 0;
           }
-          &.btnA{
+          &.btnA {
             color: #fff;
           }
         }
@@ -1301,14 +1425,13 @@ export default {
         color: #1f9ecc;
         font-size: 0.2rem;
         transition: all 0.1s;
-        span{
+        span {
           color: #1f9ecc;
         }
-        &.btnA{
-          span{
+        &.btnA {
+          span {
             color: #fff;
           }
-          
         }
         &:hover {
           transform: scale(1.1);
@@ -1561,7 +1684,7 @@ export default {
           &:last-child {
             margin-right: 0;
           }
-          &.btnA{
+          &.btnA {
             color: #fff;
           }
         }
