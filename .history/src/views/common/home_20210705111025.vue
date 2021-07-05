@@ -52,24 +52,10 @@
         </el-dropdown>
       </div>
     </div>
- 
+    <div>
+      设备总数
+    </div>
     <div class="main">
-            <div class="panel_box">
-        <div class="data_item">
-          <div class="tit">设备总数</div>
-          <div class="data">
-            <span class="txt1">{{equipmentAll}}</span>
-            台
-          </div>
-        </div>
-        <div class="data_item">
-          <div class="tit">故障台数</div>
-          <div class="data">
-            <span class="txt1">{{equipmentMal}}</span>
-            台
-          </div>
-        </div>
-      </div>
       <div class="maint">
         <div class="mt1">
           <div class="mt1bg"></div>
@@ -77,11 +63,6 @@
             <div class="tit">
               <img src="~@static/static/icon.png" alt="" />
               <span>设备分布</span>
-            </div>
-            <div class="btn_box">
-              <div @click="getAbnormalTrend('week')" class="titr_btn" :class="active5=='week'?'btnA':''">状态</div>
-              <div @click="getAbnormalTrend('month')" class="titr_btn" :class="active5=='month'?'btnA':''">等级</div>
-              <div @click="getAbnormalTrend('year')" class="titr_btn" :class="active5=='year'?'btnA':''">部门</div>
             </div>
           </div>
           <div class="mtbox" id="deviceStatus"></div>
@@ -240,9 +221,6 @@ export default {
       active2:'week',
       active3:'week',
       active4:'week',
-      active5:'week',
-      equipmentAll:666,//设备总数
-      equipmentMal:5,//设备故障数
     };
   },
   created() {
@@ -1066,44 +1044,6 @@ export default {
 .main {
   min-width: 1024px;
   max-width: 1920px;
-  margin-top: 0.75rem;
-  position: relative;
-  .panel_box {
-    position: absolute;
-    top: -1.55rem;
-    width: 6.75rem;
-    padding: 0.25rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    .data_item {
-      width: 2.575rem;
-      height: 1.4875rem;
-      background: url(~@static/static/aaa.png) no-repeat center center;
-      background-size: 100% 100%;
-      padding: 0.2rem 0.125rem 0.25rem 0.2rem;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      .tit {
-        font-size: 0.25rem;
-        color: #fff;
-      }
-      .data {
-        font-size: 0.25rem;
-        color: #fff;
-        text-align: right;
-        .txt1 {
-          font-weight: bold;
-          font-style: italic;
-          font-size: 0.5375rem;
-          color: #f6ac19;
-          margin-right: 0.1rem;
-        }
-      }
-    }
-  }
 }
 
 @keyframes mt1bg {
@@ -1139,9 +1079,6 @@ export default {
       height: 0.625rem;
       background: url(~@static/static/icon1.png) no-repeat bottom center;
       background-size: 100% auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
       .tit {
         display: flex;
         img {
@@ -1152,26 +1089,6 @@ export default {
         span {
           font-size: 0.25rem;
           color: #fff;
-        }
-      }
-            .btn_box {
-        display: flex;
-        .titr_btn {
-          background: #331f33;
-          text-align: center;
-          height: 0.35rem;
-          width: 0.75rem;
-          margin-right: 0.0625rem;
-          line-height: 0.35rem;
-          border: 1px solid #1f9ecc;
-          color: #1f9ecc;
-          cursor: pointer;
-          &:last-child {
-            margin-right: 0;
-          }
-          &.btnA{
-            color: #fff;
-          }
         }
       }
     }
@@ -1300,14 +1217,8 @@ export default {
         color: #1f9ecc;
         font-size: 0.2rem;
         transition: all 0.1s;
-        span{
-          color: #1f9ecc;
-        }
         &.btnA{
-          span{
-            color: #fff;
-          }
-          
+          color: #fff;
         }
         &:hover {
           transform: scale(1.1);

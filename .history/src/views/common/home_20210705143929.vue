@@ -58,14 +58,14 @@
         <div class="data_item">
           <div class="tit">设备总数</div>
           <div class="data">
-            <span class="txt1">{{equipmentAll}}</span>
+            <span class="txt1">888</span>
             台
           </div>
         </div>
         <div class="data_item">
           <div class="tit">故障台数</div>
           <div class="data">
-            <span class="txt1">{{equipmentMal}}</span>
+            <span class="txt1">5</span>
             台
           </div>
         </div>
@@ -241,8 +241,6 @@ export default {
       active3:'week',
       active4:'week',
       active5:'week',
-      equipmentAll:666,//设备总数
-      equipmentMal:5,//设备故障数
     };
   },
   created() {
