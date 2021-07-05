@@ -239,7 +239,7 @@ export default {
   beforeCreate() {},
 
   mounted() {
-    this.getDeviceStatus(); //设备状态
+    this.getDeviceGroupData("status"); //分组设备环状图
     this.getAbnormalTrend("week"); //异常趋势
     this.getAbsent("week"); //缺勤周期
     this.getMissed("week"); //漏检周期
@@ -342,18 +342,25 @@ export default {
       }
       this.fullscreen = !this.fullscreen;
     },
-    async getDeviceStatus() {
-      //设备状态
-      let bdata = "";
-      await this.$http({
-        url: this.$http.adornUrl("/inspection/device/getDeviceStatus"),
+    getDeviceGroupData(flag) {
+      this.$http({
+        url: this.$http.adornUrl(
+          "/dataAnalysis/homeDataAnalysis/getGroupDeviceData"
+        ),
         method: "get",
+        params: this.$http.adornParams({
+          flag: flag,
+        }),
       }).then(({ data }) => {
         if (data && data.code === 0) {
-          bdata = data.list[0];
+          var deviceData = data.data.series;
+          var deviceGroupName = data.data.xAxis;
+          this.drawDeviceDataChar(deviceData, deviceGroupName);
         } else {
         }
       });
+    },
+    drawDeviceDataChar(deviceData, deviceGroupName) {
       //设备状态
       var option = {
         tooltip: {
@@ -362,7 +369,7 @@ export default {
         legend: {
           bottom: "5%",
           left: "center",
-          data: ["运行", "备用", "检修", "其他"],
+          data: deviceGroupName,
           textStyle: {
             // color: '#24dcf7',
             color: "#ffffff",
@@ -402,13 +409,7 @@ export default {
             labelLine: {
               show: false,
             },
-            data: [
-              // { value: bdata.sum, name: "总数" },
-              { value: bdata.run, name: "运行" },
-              { value: bdata.standby, name: "备用" },
-              { value: bdata.overhaul, name: "检修" },
-              { value: bdata.other, name: "其他" },
-            ],
+            data: deviceData,
           },
         ],
       };
