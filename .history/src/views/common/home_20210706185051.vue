@@ -110,21 +110,21 @@
               <div
                 @click="getDeviceGroupData('status')"
                 class="titr_btn"
-                :class="active6 == 'status' ? 'btnA' : ''"
+                :class="active5 == 'week' ? 'btnA' : ''"
               >
                 状态
               </div>
               <div
                 @click="getDeviceGroupData('level')"
                 class="titr_btn"
-                :class="active6 == 'level' ? 'btnA' : ''"
+                :class="active5 == 'month' ? 'btnA' : ''"
               >
                 等级
               </div>
               <div
                 @click="getDeviceGroupData('dept')"
                 class="titr_btn"
-                :class="active6 == 'dept' ? 'btnA' : ''"
+                :class="active5 == 'year' ? 'btnA' : ''"
               >
                 部门
               </div>
@@ -377,7 +377,7 @@ export default {
       active2: "week",
       active3: "week",
       active4: "week",
-      active6: "status",
+      active5: "week",
       equipmentAll: "", //设备总数
       equipmentMal: "", //设备故障数
     };
@@ -529,7 +529,6 @@ export default {
       });
     },
     getDeviceGroupData(flag) {
-      this.active6 = flag;
       this.$http({
         url: this.$http.adornUrl(
           "/dataAnalysis/homeDataAnalysis/getGroupDeviceData"

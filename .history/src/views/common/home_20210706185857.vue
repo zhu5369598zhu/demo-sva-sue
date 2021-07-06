@@ -377,6 +377,7 @@ export default {
       active2: "week",
       active3: "week",
       active4: "week",
+      active5: "week",
       active6: "status",
       equipmentAll: "", //设备总数
       equipmentMal: "", //设备故障数
@@ -529,7 +530,6 @@ export default {
       });
     },
     getDeviceGroupData(flag) {
-      this.active6 = flag;
       this.$http({
         url: this.$http.adornUrl(
           "/dataAnalysis/homeDataAnalysis/getGroupDeviceData"

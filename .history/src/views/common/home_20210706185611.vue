@@ -110,7 +110,7 @@
               <div
                 @click="getDeviceGroupData('status')"
                 class="titr_btn"
-                :class="active6 == 'status' ? 'btnA' : ''"
+                :class="active6 == 'week' ? 'btnA' : ''"
               >
                 状态
               </div>
@@ -377,7 +377,8 @@ export default {
       active2: "week",
       active3: "week",
       active4: "week",
-      active6: "status",
+      active5: "week",
+      active6: "week",
       equipmentAll: "", //设备总数
       equipmentMal: "", //设备故障数
     };
@@ -529,7 +530,6 @@ export default {
       });
     },
     getDeviceGroupData(flag) {
-      this.active6 = flag;
       this.$http({
         url: this.$http.adornUrl(
           "/dataAnalysis/homeDataAnalysis/getGroupDeviceData"

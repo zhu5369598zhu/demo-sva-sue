@@ -79,23 +79,12 @@
           </div>
         </div>
       </div>
-      <div class="work_box">
-        <div class="work_order">
-          <div class="work_title">
-            <img src="~@static/static/icon.png" alt="" /> <span>工单列表</span>
-          </div>
-          <div class="work_lsit">
-            <div class="work_item">待受理： 56条</div>
-            <div class="work_item">待上报： 36条</div>
-            <div class="work_item">待审核： 23条</div>
-          </div>
-        </div>
-        <div class="work_order">
-          <div class="work_title"><img src="~@static/static/icon.png" alt="" /> <span>缺陷列表</span></div>
-          <div class="work_lsit">
-            <div class="work_item">填报缺陷： 56条</div>
-            <div class="work_item">巡检异常： 36条</div>
-          </div>
+      <div class="work_order">
+        <div class="work_title">工单列表</div>
+        <div class="work_lsit">
+          <div class="work_item">待受理： 56条</div>
+          <div class="work_item">待上报： 36条</div>
+          <div class="work_item">待审核： 23条</div>
         </div>
       </div>
       <div class="maint">
@@ -110,21 +99,21 @@
               <div
                 @click="getDeviceGroupData('status')"
                 class="titr_btn"
-                :class="active6 == 'status' ? 'btnA' : ''"
+                :class="active5 == 'week' ? 'btnA' : ''"
               >
                 状态
               </div>
               <div
                 @click="getDeviceGroupData('level')"
                 class="titr_btn"
-                :class="active6 == 'level' ? 'btnA' : ''"
+                :class="active5 == 'month' ? 'btnA' : ''"
               >
                 等级
               </div>
               <div
                 @click="getDeviceGroupData('dept')"
                 class="titr_btn"
-                :class="active6 == 'dept' ? 'btnA' : ''"
+                :class="active5 == 'year' ? 'btnA' : ''"
               >
                 部门
               </div>
@@ -377,7 +366,7 @@ export default {
       active2: "week",
       active3: "week",
       active4: "week",
-      active6: "status",
+      active5: "week",
       equipmentAll: "", //设备总数
       equipmentMal: "", //设备故障数
     };
@@ -529,7 +518,6 @@ export default {
       });
     },
     getDeviceGroupData(flag) {
-      this.active6 = flag;
       this.$http({
         url: this.$http.adornUrl(
           "/dataAnalysis/homeDataAnalysis/getGroupDeviceData"
@@ -1292,36 +1280,23 @@ export default {
       }
     }
   }
-  .work_box {
+
+  .work_order {
     position: absolute;
     top: -1.25rem;
     right: 0;
     width: 6.75rem;
     padding: 0.25rem;
-  }
-  .work_order {
-    margin-bottom: 0.25rem;
     .work_title {
-      display: flex;
-      img {
-        height: 0.25rem;
-        width: 0.15rem;
-        margin-right: 0.125rem;
-      }
-      span {
-        font-size: 0.25rem;
-        color: #fff;
-      }
+      font-size: 0.25rem;
       margin-bottom: 0.2rem;
     }
     .work_lsit {
       display: flex;
       align-items: center;
-      padding-left: 0.275rem;
       .work_item {
         font-size: 0.2rem;
         margin-right: 0.18rem;
-        color: #24dcf7;
       }
     }
   }

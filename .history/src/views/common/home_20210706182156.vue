@@ -25,16 +25,7 @@
         <img src="~@/assets/img/logo.png" alt="" />
       </div>
       <h1 class="title">HcoAladin 智慧云点巡检管理系统</h1>
-      <div class="head_btn_l">
-        <div class="screen_btn" @click="screenShow()">首页</div>
-        <div class="screen_btn" @click="screenShow()">智能巡检</div>
-        <div class="screen_btn" @click="screenShow()">无线检测</div>
-      </div>
-      <div class="head_btn_r">
-        <div class="screen_btn" @click="screenShow()">资产盘点</div>
-        <div class="screen_btn" @click="screenShow()">设备润滑</div>
-        <div class="screen_btn" @click="screenShow()">全屏切换</div>
-      </div>
+      <div class="screen_btn" @click="screenShow()">全屏切换</div>
       <div class="user_box">
         <el-dropdown :show-timeout="0" placement="bottom">
           <span class="el-dropdown-link">
@@ -79,25 +70,6 @@
           </div>
         </div>
       </div>
-      <div class="work_box">
-        <div class="work_order">
-          <div class="work_title">
-            <img src="~@static/static/icon.png" alt="" /> <span>工单列表</span>
-          </div>
-          <div class="work_lsit">
-            <div class="work_item">待受理： 56条</div>
-            <div class="work_item">待上报： 36条</div>
-            <div class="work_item">待审核： 23条</div>
-          </div>
-        </div>
-        <div class="work_order">
-          <div class="work_title"><img src="~@static/static/icon.png" alt="" /> <span>缺陷列表</span></div>
-          <div class="work_lsit">
-            <div class="work_item">填报缺陷： 56条</div>
-            <div class="work_item">巡检异常： 36条</div>
-          </div>
-        </div>
-      </div>
       <div class="maint">
         <div class="mt1">
           <div class="mt1bg"></div>
@@ -110,21 +82,21 @@
               <div
                 @click="getDeviceGroupData('status')"
                 class="titr_btn"
-                :class="active6 == 'status' ? 'btnA' : ''"
+                :class="active5 == 'week' ? 'btnA' : ''"
               >
                 状态
               </div>
               <div
                 @click="getDeviceGroupData('level')"
                 class="titr_btn"
-                :class="active6 == 'level' ? 'btnA' : ''"
+                :class="active5 == 'month' ? 'btnA' : ''"
               >
                 等级
               </div>
               <div
                 @click="getDeviceGroupData('dept')"
                 class="titr_btn"
-                :class="active6 == 'dept' ? 'btnA' : ''"
+                :class="active5 == 'year' ? 'btnA' : ''"
               >
                 部门
               </div>
@@ -377,7 +349,7 @@ export default {
       active2: "week",
       active3: "week",
       active4: "week",
-      active6: "status",
+      active5: "week",
       equipmentAll: "", //设备总数
       equipmentMal: "", //设备故障数
     };
@@ -529,7 +501,6 @@ export default {
       });
     },
     getDeviceGroupData(flag) {
-      this.active6 = flag;
       this.$http({
         url: this.$http.adornUrl(
           "/dataAnalysis/homeDataAnalysis/getGroupDeviceData"
@@ -554,7 +525,7 @@ export default {
           trigger: "item",
         },
         legend: {
-          bottom: "0%",
+          bottom: '0%',
           left: "center",
           data: deviceGroupName,
           textStyle: {
@@ -665,8 +636,8 @@ export default {
         grid: {
           left: "3%",
           right: "4%",
-          bottom: "0%",
-          top: "12%",
+          bottom: '0%',
+          top: '12%',
           containLabel: true,
         },
         xAxis: {
@@ -1190,63 +1161,29 @@ export default {
     color: #fff;
     font-size: 0.45rem;
   }
-  .head_btn_l {
+
+  .screen_btn {
     position: absolute;
+    right: 5%;
     top: 0.0625rem;
-    left: 8%;
+    width: 1.25rem;
+    height: 0.625rem;
+    text-align: center;
+    line-height: 0.625rem;
+    margin-right: 0.1875rem;
+    height: 0.5625rem;
+    background: url(~@static/static/d.png) no-repeat;
+    background-size: 100% 100%;
+    cursor: pointer;
     display: flex;
+    justify-content: center;
+    padding: 0 0.125rem;
     align-items: center;
-    .screen_btn {
-      width: 1.25rem;
-      height: 0.625rem;
-      text-align: center;
-      line-height: 0.625rem;
-      margin-right: 0.1875rem;
-      height: 0.5625rem;
-      background: url(~@static/static/d.png) no-repeat;
-      background-size: 100% 100%;
-      cursor: pointer;
-      display: flex;
-      justify-content: center;
-      padding: 0 0.125rem;
-      align-items: center;
-      color: #fff;
-      font-size: 0.2rem;
-      transition: all 0.1s;
-      margin-right: 0.25rem;
-      &:hover {
-        transform: scale(1.1);
-      }
-    }
-  }
-  .head_btn_r {
-    position: absolute;
-    top: 0.0625rem;
-    right: 8%;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    .screen_btn {
-      width: 1.25rem;
-      height: 0.625rem;
-      text-align: center;
-      line-height: 0.625rem;
-      margin-right: 0.1875rem;
-      height: 0.5625rem;
-      background: url(~@static/static/d.png) no-repeat;
-      background-size: 100% 100%;
-      cursor: pointer;
-      display: flex;
-      justify-content: center;
-      padding: 0 0.125rem;
-      align-items: center;
-      color: #fff;
-      font-size: 0.2rem;
-      transition: all 0.1s;
-      margin-left: 0.25rem;
-      &:hover {
-        transform: scale(1.1);
-      }
+    color: #fff;
+    font-size: 0.2rem;
+    transition: all 0.1s;
+    &:hover {
+      transform: scale(1.1);
     }
   }
 }
@@ -1289,39 +1226,6 @@ export default {
           color: #f6ac19;
           margin-right: 0.1rem;
         }
-      }
-    }
-  }
-  .work_box {
-    position: absolute;
-    top: -1.25rem;
-    right: 0;
-    width: 6.75rem;
-    padding: 0.25rem;
-  }
-  .work_order {
-    margin-bottom: 0.25rem;
-    .work_title {
-      display: flex;
-      img {
-        height: 0.25rem;
-        width: 0.15rem;
-        margin-right: 0.125rem;
-      }
-      span {
-        font-size: 0.25rem;
-        color: #fff;
-      }
-      margin-bottom: 0.2rem;
-    }
-    .work_lsit {
-      display: flex;
-      align-items: center;
-      padding-left: 0.275rem;
-      .work_item {
-        font-size: 0.2rem;
-        margin-right: 0.18rem;
-        color: #24dcf7;
       }
     }
   }

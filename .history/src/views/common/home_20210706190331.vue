@@ -529,7 +529,7 @@ export default {
       });
     },
     getDeviceGroupData(flag) {
-      this.active6 = flag;
+       this.active = flag;
       this.$http({
         url: this.$http.adornUrl(
           "/dataAnalysis/homeDataAnalysis/getGroupDeviceData"
