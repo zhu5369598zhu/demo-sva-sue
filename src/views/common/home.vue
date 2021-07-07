@@ -85,16 +85,20 @@
             <img src="~@static/static/icon.png" alt="" /> <span>工单列表</span>
           </div>
           <div class="work_lsit">
-            <div class="work_item">待受理： 56条</div>
-            <div class="work_item">待上报： 36条</div>
-            <div class="work_item">待审核： 23条</div>
+            <div class="work_item">待受理： {{ orderAlreadyCount }}条</div>
+            <div class="work_item">待上报： {{ orderReportedCount }}条</div>
+            <div class="work_item">待审核： {{ orderConfirmCount }}条</div>
           </div>
         </div>
         <div class="work_order">
-          <div class="work_title"><img src="~@static/static/icon.png" alt="" /> <span>缺陷列表</span></div>
+          <div class="work_title">
+            <img src="~@static/static/icon.png" alt="" /> <span>缺陷列表</span>
+          </div>
           <div class="work_lsit">
-            <div class="work_item">填报缺陷： 56条</div>
-            <div class="work_item">巡检异常： 36条</div>
+            <div class="work_item">填报缺陷： {{ defectiveCount }}条</div>
+            <div class="work_item">
+              巡检异常： {{ inspectionExceptionCount }}条
+            </div>
           </div>
         </div>
       </div>
@@ -380,6 +384,11 @@ export default {
       active6: "status",
       equipmentAll: "", //设备总数
       equipmentMal: "", //设备故障数
+      orderAlreadyCount: "", //待受理工单
+      orderReportedCount: "", //待上报工单
+      orderConfirmCount: "", //待审核工单
+      defectiveCount: "", //填报缺陷
+      inspectionExceptionCount: "", //巡检异常
     };
   },
   created() {
@@ -417,6 +426,7 @@ export default {
     this.getAbnormal(); //异常排名
     this.getCarryOut("week"); //完成率
     this.getDataList("date");
+    this.getMessageData();
   },
   activated() {
     if (this.deviceStatusLine) {
@@ -523,7 +533,24 @@ export default {
         if (data && data.code === 0) {
           this.equipmentAll = data.data.deviceCount;
           this.equipmentMal = data.data.exceptionDeviceCount;
-          this.drawDeviceDataChar(deviceData, deviceGroupName);
+        } else {
+        }
+      });
+    },
+    getMessageData() {
+      this.$http({
+        url: this.$http.adornUrl(
+          "/dataAnalysis/homeDataAnalysis/getMessageData"
+        ),
+        method: "get",
+      }).then(({ data }) => {
+        if (data && data.code === 0) {
+          this.orderAlreadyCount = data.data.orderAlreadyCount;
+          this.orderReportedCount = data.data.orderReportedCount;
+          this.orderConfirmCount = data.data.orderConfirmCount;
+          this.defectiveCount = data.data.defectiveCount;
+          this.inspectionExceptionCount = data.data.inspectionExceptionCount;
+          alert(orderAlreadyCount);
         } else {
         }
       });
