@@ -423,7 +423,7 @@ export default {
   beforeCreate() {},
 
   mounted() {
-    this.getUserInfo();
+    this.getUserInfo(); //获取登录用户信息用于websocket推送
     this.getDeviceData();
     this.getDeviceGroupData("status"); //分组设备环状图
     this.getAbnormalTrend("week"); //异常趋势
