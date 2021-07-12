@@ -90,17 +90,20 @@
                  alt="" /> <span>工单列表</span>
           </div>
           <div class="work_lsit">
-            <div class="work_item">待受理： 56条</div>
-            <div class="work_item">待上报： 36条</div>
-            <div class="work_item">待审核： 23条</div>
+            <div class="work_item">待受理： {{ orderAlreadyCount }}条</div>
+            <div class="work_item">待上报： {{ orderReportedCount }}条</div>
+            <div class="work_item">待审核： {{ orderConfirmCount }}条</div>
           </div>
         </div>
         <div class="work_order">
-          <div class="work_title"><img src="~@static/static/icon.png"
-                 alt="" /> <span>缺陷列表</span></div>
+          <div class="work_title">
+            <img src="~@static/static/icon.png" alt="" /> <span>缺陷列表</span>
+          </div>
           <div class="work_lsit">
-            <div class="work_item">填报缺陷： 56条</div>
-            <div class="work_item">巡检异常： 36条</div>
+            <div class="work_item">填报缺陷： {{ defectiveCount }}条</div>
+            <div class="work_item">
+              巡检异常： {{ inspectionExceptionCount }}条
+            </div>
           </div>
         </div>
       </div>
@@ -377,6 +380,11 @@ export default {
       active6: "status",
       equipmentAll: "", //设备总数
       equipmentMal: "", //设备故障数
+      orderAlreadyCount: "", //待受理工单
+      orderReportedCount: "", //待上报工单
+      orderConfirmCount: "", //待审核工单
+      defectiveCount: "", //填报缺陷
+      inspectionExceptionCount: "", //巡检异常
     };
   },
   created () {
@@ -393,6 +401,11 @@ export default {
         return this.$store.state.user.name;
       },
     },
+    userId: {
+      get() {
+        return this.$store.state.user.id;
+      },
+    },
     menuList: {
       get () {
         return this.$store.state.common.menuList;
@@ -405,7 +418,9 @@ export default {
 
   beforeCreate () { },
 
-  mounted () {
+
+  mounted() {
+    this.getUserInfo(); //获取登录用户信息用于websocket推送
     this.getDeviceData();
     this.getDeviceGroupData("status"); //分组设备环状图
     this.getAbnormalTrend("week"); //异常趋势
@@ -414,6 +429,7 @@ export default {
     this.getAbnormal(); //异常排名
     this.getCarryOut("week"); //完成率
     this.getDataList("date");
+    this.getMessageData();
   },
   activated () {
     if (this.deviceStatusLine) {
@@ -520,7 +536,23 @@ export default {
         if (data && data.code === 0) {
           this.equipmentAll = data.data.deviceCount;
           this.equipmentMal = data.data.exceptionDeviceCount;
-          this.drawDeviceDataChar(deviceData, deviceGroupName);
+        } else {
+        }
+      });
+    },
+    getMessageData() {
+      this.$http({
+        url: this.$http.adornUrl(
+          "/dataAnalysis/homeDataAnalysis/getMessageData"
+        ),
+        method: "get",
+      }).then(({ data }) => {
+        if (data && data.code === 0) {
+          this.orderAlreadyCount = data.data.orderAlreadyCount;
+          this.orderReportedCount = data.data.orderReportedCount;
+          this.orderConfirmCount = data.data.orderConfirmCount;
+          this.defectiveCount = data.data.defectiveCount;
+          this.inspectionExceptionCount = data.data.inspectionExceptionCount;
         } else {
         }
       });
@@ -1023,7 +1055,21 @@ export default {
         this.absent.resize();
       });
     },
-    getMissed (flag) {
+
+    getUserInfo() {
+      this.$http({
+        url: this.$http.adornUrl("/sys/user/info"),
+        method: "get",
+        params: this.$http.adornParams(),
+      }).then(({ data }) => {
+        if (data && data.code === 0) {
+          var currentUserId = data.user.userId;
+          this.initWebSocket(currentUserId);
+        }
+      });
+    },
+    getMissed(flag) {
+
       this.active4 = flag;
       //漏检周期
       this.$http({
@@ -1129,6 +1175,75 @@ export default {
       window.addEventListener("resize", () => {
         this.missed.resize();
       });
+    },
+    initWebSocket: function (currentUserId) {
+      // WebSocket与普通的请求所用协议有所不同，ws等同于http，wss等同于https
+      this.websock = new WebSocket(
+        "ws://192.168.31.208:8080/sva/websocket?" + currentUserId
+      );
+      this.websock.onopen = this.websocketonopen;
+      this.websock.onerror = this.websocketonerror;
+      this.websock.onmessage = this.websocketonmessage;
+      this.websock.onclose = this.websocketclose;
+    },
+    websocketonopen: function () {
+      console.log("WebSocket连接成功");
+      // this.websocketsend("来自客户端的数据")
+    },
+    websocketonerror: function (e) {
+      console.log("WebSocket连接发生错误" + e.code);
+    },
+    websocketonmessage: function (e) {
+      var command = e.data.split(":");
+      if (command[0] == "orderAlreadySum") {
+        this.orderAlreadyCount =
+          parseInt(this.orderAlreadyCount) + parseInt(command[1]);
+      }
+      if (command[0] == "orderAlreadySub") {
+        this.orderAlreadyCount =
+          parseInt(this.orderAlreadyCount) - parseInt(command[1]);
+      }
+      if (command[0] == "orderReportedSum") {
+        this.orderReportedCount =
+          parseInt(this.orderReportedCount) + parseInt(command[1]);
+      }
+      if (command[0] == "orderReportedSub") {
+        this.orderReportedCount =
+          parseInt(this.orderReportedCount) - parseInt(command[1]);
+      }
+      if (command[0] == "orderConfirmSum") {
+        this.orderConfirmCount =
+          parseInt(this.orderConfirmCount) + parseInt(command[1]);
+      }
+      if (command[0] == "orderConfirmSub") {
+        this.orderConfirmCount =
+          parseInt(this.orderConfirmCount) - parseInt(command[1]);
+      }
+
+      if (command[0] == "defectiveSum") {
+        this.defectiveCount =
+          parseInt(this.defectiveCount) + parseInt(command[1]);
+      }
+      if (command[0] == "defectiveSub") {
+        this.defectiveCount =
+          parseInt(this.defectiveCount) - parseInt(command[1]);
+      }
+      if (command[0] == "inspectionExceptionSum") {
+        this.inspectionExceptionCount =
+          parseInt(this.inspectionExceptionCount) + parseInt(command[1]);
+      }
+      if (command[0] == "inspectionExceptionSub") {
+        this.inspectionExceptionCount =
+          parseInt(this.inspectionExceptionCount) - parseInt(command[1]);
+      }
+    },
+    websocketclose: function (e) {
+      this.websock.close();
+      console.log("connection closed (" + e.code + ")");
+    },
+    websocketsend(Data) {
+      // 数据发送
+      this.websock.send(Data);
     },
   },
 };
