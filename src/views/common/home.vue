@@ -3,60 +3,64 @@
   <div class="box">
     <div class="nav">
       <div class="change-type">
-        <div class="type-left" :class="+'' + menuC ? 'showListType' : ' '">
+        <div class="type-left"
+             :class="+'' + menuC ? 'showListType' : ' '">
           <ul>
-            <li
-              @click="gotoRouteHandle(item.list[0])"
-              v-for="(item, index) in menuList"
-              :key="index"
-            >
-              <a>{{ item.name }}</a
-              ><span></span>
+            <li @click="gotoRouteHandle(item.list[0])"
+                v-for="(item, index) in menuList"
+                :key="index">
+              <a>{{ item.name }}</a><span></span>
             </li>
           </ul>
         </div>
-        <div class="type-right" @click="menuClick">
+        <div class="type-right"
+             @click="menuClick">
           <p><i class="el-icon-menu"></i>菜单</p>
         </div>
       </div>
     </div>
     <div class="head">
       <div class="logo_box">
-        <img src="~@/assets/img/logo.png" alt="" />
+        <img src="~@/assets/img/logo.png"
+             alt="" />
       </div>
       <h1 class="title">HcoAladin 智慧云点巡检管理系统</h1>
       <div class="head_btn_l">
-        <div class="screen_btn" @click="screenShow()">首页</div>
-        <div class="screen_btn" @click="screenShow()">智能巡检</div>
-        <div class="screen_btn" @click="screenShow()">无线检测</div>
+        <div class="screen_btn"
+             @click="">首页</div>
+        <div class="screen_btn"
+             @click="screenShow()">智能巡检</div>
+        <div class="screen_btn"
+             @click="screenShow()">无线检测</div>
       </div>
       <div class="head_btn_r">
-        <div class="screen_btn" @click="screenShow()">资产盘点</div>
-        <div class="screen_btn" @click="screenShow()">设备润滑</div>
-        <div class="screen_btn" @click="screenShow()">全屏切换</div>
+        <div class="screen_btn"
+             @click="screenShow()">资产盘点</div>
+        <div class="screen_btn"
+             @click="screenShow()">设备润滑</div>
+        <div class="screen_btn"
+             @click="screenShow()">全屏切换</div>
       </div>
       <div class="user_box">
-        <el-dropdown :show-timeout="0" placement="bottom">
+        <el-dropdown :show-timeout="0"
+                     placement="bottom">
           <span class="el-dropdown-link">
-            <img v-if="purl !== ''" @click="" :src="purl" :alt="userName" />
-            <img
-              v-else
-              @click=""
-              src="~@/assets/img/avatar.png"
-              :alt="userName"
-            />
+            <img v-if="purl !== ''"
+                 @click=""
+                 :src="purl"
+                 :alt="userName" />
+            <img v-else
+                 @click=""
+                 src="~@/assets/img/avatar.png"
+                 :alt="userName" />
 
             {{ userName }}
           </span>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item
-              @click.native="updatePasswordHandle()"
-              style="color: #333"
-              >修改密码</el-dropdown-item
-            >
-            <el-dropdown-item @click.native="logoutHandle()" style="color: #333"
-              >退出</el-dropdown-item
-            >
+            <el-dropdown-item @click.native="updatePasswordHandle()"
+                              style="color: #333">修改密码</el-dropdown-item>
+            <el-dropdown-item @click.native="logoutHandle()"
+                              style="color: #333">退出</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </div>
@@ -82,7 +86,8 @@
       <div class="work_box">
         <div class="work_order">
           <div class="work_title">
-            <img src="~@static/static/icon.png" alt="" /> <span>工单列表</span>
+            <img src="~@static/static/icon.png"
+                 alt="" /> <span>工单列表</span>
           </div>
           <div class="work_lsit">
             <div class="work_item">待受理： 56条</div>
@@ -91,7 +96,8 @@
           </div>
         </div>
         <div class="work_order">
-          <div class="work_title"><img src="~@static/static/icon.png" alt="" /> <span>缺陷列表</span></div>
+          <div class="work_title"><img src="~@static/static/icon.png"
+                 alt="" /> <span>缺陷列表</span></div>
           <div class="work_lsit">
             <div class="work_item">填报缺陷： 56条</div>
             <div class="work_item">巡检异常： 36条</div>
@@ -103,248 +109,239 @@
           <div class="mt1bg"></div>
           <div class="tit_box">
             <div class="tit">
-              <img src="~@static/static/icon.png" alt="" />
+              <img src="~@static/static/icon.png"
+                   alt="" />
               <span>设备分布</span>
             </div>
             <div class="btn_box">
-              <div
-                @click="getDeviceGroupData('status')"
-                class="titr_btn"
-                :class="active6 == 'status' ? 'btnA' : ''"
-              >
+              <div @click="getDeviceGroupData('status')"
+                   class="titr_btn"
+                   :class="active6 == 'status' ? 'btnA' : ''">
                 状态
               </div>
-              <div
-                @click="getDeviceGroupData('level')"
-                class="titr_btn"
-                :class="active6 == 'level' ? 'btnA' : ''"
-              >
+              <div @click="getDeviceGroupData('level')"
+                   class="titr_btn"
+                   :class="active6 == 'level' ? 'btnA' : ''">
                 等级
               </div>
-              <div
-                @click="getDeviceGroupData('dept')"
-                class="titr_btn"
-                :class="active6 == 'dept' ? 'btnA' : ''"
-              >
+              <div @click="getDeviceGroupData('dept')"
+                   class="titr_btn"
+                   :class="active6 == 'dept' ? 'btnA' : ''">
                 部门
               </div>
             </div>
           </div>
-          <div class="mtbox" id="deviceStatus"></div>
+          <div class="mtbox"
+               id="deviceStatus"></div>
         </div>
         <div class="mt2">
           <div class="bg1"></div>
           <div class="bg2"></div>
           <div class="bg3">
-            <img src="~@static/static/sj.png" alt="" />
+            <img src="~@static/static/sj.png"
+                 alt="" />
             <span>巡检看板</span>
           </div>
           <div class="bg4"></div>
           <div class="bg5"></div>
           <div class="btn_list">
-            <div
-              @click="getDataList('date')"
-              key=""
-              class="btn"
-              :class="active == 'date' ? 'btnA' : ''"
-            >
-              <img src="~@static/static/s.png" alt="" />
+            <div @click="getDataList('date')"
+                 key=""
+                 class="btn"
+                 :class="active == 'date' ? 'btnA' : ''">
+              <img src="~@static/static/s.png"
+                   alt="" />
               <span>本日</span>
             </div>
-            <div
-              @click="getDataList('week')"
-              class="btn"
-              :class="active == 'week' ? 'btnA' : ''"
-            >
-              <img src="~@static/static/s.png" alt="" />
+            <div @click="getDataList('week')"
+                 class="btn"
+                 :class="active == 'week' ? 'btnA' : ''">
+              <img src="~@static/static/s.png"
+                   alt="" />
               <span>本周</span>
             </div>
-            <div
-              @click="getDataList('month')"
-              class="btn"
-              :class="active == 'month' ? 'btnA' : ''"
-            >
-              <img src="~@static/static/s.png" alt="" />
+            <div @click="getDataList('month')"
+                 class="btn"
+                 :class="active == 'month' ? 'btnA' : ''">
+              <img src="~@static/static/s.png"
+                   alt="" />
               <span>本月</span>
             </div>
-            <div
-              @click="getDataList('year')"
-              class="btn"
-              :class="active == 'year' ? 'btnA' : ''"
-            >
-              <img src="~@static/static/s.png" alt="" />
+            <div @click="getDataList('year')"
+                 class="btn"
+                 :class="active == 'year' ? 'btnA' : ''">
+              <img src="~@static/static/s.png"
+                   alt="" />
               <span>本年</span>
             </div>
           </div>
           <div class="suspension1">
-            <div id="inspectedDiv" class="data_box">{{ inspectedRate }}</div>
+            <div id="inspectedDiv"
+                 class="data_box">{{ inspectedRate }}</div>
             <div class="tit_box">
               <span>完成率</span>
-              <img class="img2" src="~@static/static/r_86.png" alt="" />
+              <img class="img2"
+                   src="~@static/static/r_86.png"
+                   alt="" />
             </div>
           </div>
           <div class="suspension2">
             <div class="tit_box">
               <span>漏检率</span>
-              <img class="img2" src="~@static/static/r_86.png" alt="" />
+              <img class="img2"
+                   src="~@static/static/r_86.png"
+                   alt="" />
             </div>
-            <div id="missingInspectDiv" class="data_box">
+            <div id="missingInspectDiv"
+                 class="data_box">
               {{ missingInspectRate }}
             </div>
           </div>
           <div class="suspension3">
-            <div id="absenceDiv" class="data_box">{{ absenceRate }}</div>
+            <div id="absenceDiv"
+                 class="data_box">{{ absenceRate }}</div>
             <div class="tit_box">
               <span>缺勤率</span>
-              <img class="img2" src="~@static/static/r_86.png" alt="" />
+              <img class="img2"
+                   src="~@static/static/r_86.png"
+                   alt="" />
             </div>
           </div>
           <div class="suspension4">
             <div class="tit_box">
               <span>故障率</span>
-              <img class="img2" src="~@static/static/r_86.png" alt="" />
+              <img class="img2"
+                   src="~@static/static/r_86.png"
+                   alt="" />
             </div>
-            <div id="missingInspect" class="data_box">{{ exceptionRate }}</div>
+            <div id="missingInspect"
+                 class="data_box">{{ exceptionRate }}</div>
           </div>
         </div>
         <div class="mt3">
           <div class="tit_box">
             <div class="tit">
-              <img src="~@static/static/icon.png" alt="" />
+              <img src="~@static/static/icon.png"
+                   alt="" />
               <span>异常排名(TOP 5)</span>
             </div>
           </div>
-          <div class="mtbox" id="abnormal"></div>
+          <div class="mtbox"
+               id="abnormal"></div>
         </div>
       </div>
       <div class="mainb">
         <div class="mbbox">
           <div class="tit_box">
             <div class="tit">
-              <img src="~@static/static/icon.png" alt="" />
+              <img src="~@static/static/icon.png"
+                   alt="" />
               <span>设备异常趋势</span>
             </div>
             <div class="btn_box">
-              <div
-                @click="getAbnormalTrend('week')"
-                class="titr_btn"
-                :class="active1 == 'week' ? 'btnA' : ''"
-              >
+              <div @click="getAbnormalTrend('week')"
+                   class="titr_btn"
+                   :class="active1 == 'week' ? 'btnA' : ''">
                 周
               </div>
-              <div
-                @click="getAbnormalTrend('month')"
-                class="titr_btn"
-                :class="active1 == 'month' ? 'btnA' : ''"
-              >
+              <div @click="getAbnormalTrend('month')"
+                   class="titr_btn"
+                   :class="active1 == 'month' ? 'btnA' : ''">
                 月
               </div>
-              <div
-                @click="getAbnormalTrend('year')"
-                class="titr_btn"
-                :class="active1 == 'year' ? 'btnA' : ''"
-              >
+              <div @click="getAbnormalTrend('year')"
+                   class="titr_btn"
+                   :class="active1 == 'year' ? 'btnA' : ''">
                 年
               </div>
             </div>
           </div>
-          <div class="cheart_box" id="abnormalTrend"></div>
+          <div class="cheart_box"
+               id="abnormalTrend"></div>
         </div>
         <div class="mbbox">
           <div class="tit_box">
             <div class="tit">
-              <img src="~@static/static/icon.png" alt="" />
+              <img src="~@static/static/icon.png"
+                   alt="" />
               <span>巡检完成率趋势</span>
             </div>
             <div class="btn_box">
-              <div
-                @click="getCarryOut('week')"
-                class="titr_btn"
-                :class="active2 == 'week' ? 'btnA' : ''"
-              >
+              <div @click="getCarryOut('week')"
+                   class="titr_btn"
+                   :class="active2 == 'week' ? 'btnA' : ''">
                 周
               </div>
-              <div
-                @click="getCarryOut('month')"
-                class="titr_btn"
-                :class="active2 == 'month' ? 'btnA' : ''"
-              >
+              <div @click="getCarryOut('month')"
+                   class="titr_btn"
+                   :class="active2 == 'month' ? 'btnA' : ''">
                 月
               </div>
-              <div
-                @click="getCarryOut('year')"
-                class="titr_btn"
-                :class="active2 == 'year' ? 'btnA' : ''"
-              >
+              <div @click="getCarryOut('year')"
+                   class="titr_btn"
+                   :class="active2 == 'year' ? 'btnA' : ''">
                 年
               </div>
             </div>
           </div>
-          <div class="cheart_box" id="carryOut"></div>
+          <div class="cheart_box"
+               id="carryOut"></div>
         </div>
         <div class="mbbox">
           <div class="tit_box">
             <div class="tit">
-              <img src="~@static/static/icon.png" alt="" />
+              <img src="~@static/static/icon.png"
+                   alt="" />
               <span>缺勤周期表</span>
             </div>
             <div class="btn_box">
-              <div
-                @click="getAbsent('week')"
-                class="titr_btn"
-                :class="active3 == 'week' ? 'btnA' : ''"
-              >
+              <div @click="getAbsent('week')"
+                   class="titr_btn"
+                   :class="active3 == 'week' ? 'btnA' : ''">
                 周
               </div>
-              <div
-                @click="getAbsent('month')"
-                class="titr_btn"
-                :class="active3 == 'month' ? 'btnA' : ''"
-              >
+              <div @click="getAbsent('month')"
+                   class="titr_btn"
+                   :class="active3 == 'month' ? 'btnA' : ''">
                 月
               </div>
-              <div
-                @click="getAbsent('year')"
-                class="titr_btn"
-                :class="active3 == 'year' ? 'btnA' : ''"
-              >
+              <div @click="getAbsent('year')"
+                   class="titr_btn"
+                   :class="active3 == 'year' ? 'btnA' : ''">
                 年
               </div>
             </div>
           </div>
-          <div class="cheart_box" id="absent"></div>
+          <div class="cheart_box"
+               id="absent"></div>
         </div>
         <div class="mbbox">
           <div class="tit_box">
             <div class="tit">
-              <img src="~@static/static/icon.png" alt="" />
+              <img src="~@static/static/icon.png"
+                   alt="" />
               <span>漏检周期表</span>
             </div>
             <div class="btn_box">
-              <div
-                @click="getMissed('week')"
-                class="titr_btn"
-                :class="active4 == 'week' ? 'btnA' : ''"
-              >
+              <div @click="getMissed('week')"
+                   class="titr_btn"
+                   :class="active4 == 'week' ? 'btnA' : ''">
                 周
               </div>
-              <div
-                @click="getMissed('month')"
-                class="titr_btn"
-                :class="active4 == 'month' ? 'btnA' : ''"
-              >
+              <div @click="getMissed('month')"
+                   class="titr_btn"
+                   :class="active4 == 'month' ? 'btnA' : ''">
                 月
               </div>
-              <div
-                @click="getMissed('year')"
-                class="titr_btn"
-                :class="active4 == 'year' ? 'btnA' : ''"
-              >
+              <div @click="getMissed('year')"
+                   class="titr_btn"
+                   :class="active4 == 'year' ? 'btnA' : ''">
                 年
               </div>
             </div>
           </div>
-          <div class="cheart_box" id="missed"></div>
+          <div class="cheart_box"
+               id="missed"></div>
         </div>
       </div>
     </div>
@@ -356,7 +353,7 @@ import * as echarts from "echarts";
 import "@static/static/flexible.js";
 import { clearLoginInfo } from "@/utils";
 export default {
-  data() {
+  data () {
     return {
       deviceStatusLine: null, //设备状态
       abnormalTrend: null, //异常趋势
@@ -382,7 +379,7 @@ export default {
       equipmentMal: "", //设备故障数
     };
   },
-  created() {
+  created () {
     this.menuList = JSON.parse(sessionStorage.getItem("menuList") || "[]");
     this.dynamicMenuRoutes = JSON.parse(
       sessionStorage.getItem("dynamicMenuRoutes") || "[]"
@@ -392,23 +389,23 @@ export default {
 
   computed: {
     userName: {
-      get() {
+      get () {
         return this.$store.state.user.name;
       },
     },
     menuList: {
-      get() {
+      get () {
         return this.$store.state.common.menuList;
       },
-      set(val) {
+      set (val) {
         this.$store.commit("common/updateMenuList", val);
       },
     },
   },
 
-  beforeCreate() {},
+  beforeCreate () { },
 
-  mounted() {
+  mounted () {
     this.getDeviceData();
     this.getDeviceGroupData("status"); //分组设备环状图
     this.getAbnormalTrend("week"); //异常趋势
@@ -418,7 +415,7 @@ export default {
     this.getCarryOut("week"); //完成率
     this.getDataList("date");
   },
-  activated() {
+  activated () {
     if (this.deviceStatusLine) {
       this.deviceStatusLine.resize();
     }
@@ -440,14 +437,14 @@ export default {
   },
 
   methods: {
-    updatePasswordHandle() {
+    updatePasswordHandle () {
       this.updatePassowrdVisible = true;
       this.$nextTick(() => {
         this.$refs.updatePassowrd.init();
       });
     },
     // 退出
-    logoutHandle() {
+    logoutHandle () {
       this.$confirm(`确定进行[退出]操作?`, "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
@@ -465,14 +462,14 @@ export default {
             }
           });
         })
-        .catch(() => {});
+        .catch(() => { });
     },
-    menuClick() {
+    menuClick () {
       //菜单点击
       this.menuC = !this.menuC;
     },
     // 通过menuId与动态(菜单)路由进行匹配跳转至指定路由
-    gotoRouteHandle(menu) {
+    gotoRouteHandle (menu) {
       let route = this.dynamicMenuRoutes.filter(
         (item) => item.meta.menuId === menu.menuId
       );
@@ -486,7 +483,7 @@ export default {
         this.$router.push({ name: route[0].name });
       }
     },
-    screenShow() {
+    screenShow () {
       //全屏方法
       let element = document.documentElement;
       if (this.fullscreen) {
@@ -513,7 +510,7 @@ export default {
       }
       this.fullscreen = !this.fullscreen;
     },
-    getDeviceData() {
+    getDeviceData () {
       this.$http({
         url: this.$http.adornUrl(
           "/dataAnalysis/homeDataAnalysis/getDeviceData"
@@ -528,7 +525,7 @@ export default {
         }
       });
     },
-    getDeviceGroupData(flag) {
+    getDeviceGroupData (flag) {
       this.active6 = flag;
       this.$http({
         url: this.$http.adornUrl(
@@ -547,7 +544,7 @@ export default {
         }
       });
     },
-    drawDeviceDataChar(deviceData, deviceGroupName) {
+    drawDeviceDataChar (deviceData, deviceGroupName) {
       //设备状态
       var option = {
         tooltip: {
@@ -608,7 +605,7 @@ export default {
         this.deviceStatusLine.resize();
       });
     },
-    getDataList(flag) {
+    getDataList (flag) {
       this.active = flag;
       //巡检看板
       this.$http({
@@ -632,7 +629,7 @@ export default {
       });
     },
 
-    getAbnormal() {
+    getAbnormal () {
       //异常排名
       this.$http({
         url: this.$http.adornUrl(
@@ -653,7 +650,7 @@ export default {
         }
       });
     },
-    drawAbnormalChar(deviceNameData, exceptionDeviceData) {
+    drawAbnormalChar (deviceNameData, exceptionDeviceData) {
       //异常排名
       var option = {
         tooltip: {
@@ -711,7 +708,7 @@ export default {
         this.abnormal.resize();
       });
     },
-    getAbnormalTrend(flag) {
+    getAbnormalTrend (flag) {
       //异常趋势
       this.active1 = flag;
       this.$http({
@@ -733,7 +730,7 @@ export default {
         }
       });
     },
-    drawAbnormalTrendChar(xAxisData, seriesData) {
+    drawAbnormalTrendChar (xAxisData, seriesData) {
       var option = {
         // title: {
         //   text: '折线图堆叠'
@@ -815,7 +812,7 @@ export default {
       });
     },
 
-    getCarryOut(flag) {
+    getCarryOut (flag) {
       this.active2 = flag;
       //完成率趋势
       this.$http({
@@ -837,7 +834,7 @@ export default {
         }
       });
     },
-    drawCarryOutChar(xAxisData, seriesData) {
+    drawCarryOutChar (xAxisData, seriesData) {
       var option = {
         // title: {
         //   text: '折线图堆叠'
@@ -917,7 +914,7 @@ export default {
         this.carryOut.resize();
       });
     },
-    getAbsent(flag) {
+    getAbsent (flag) {
       this.active3 = flag;
       //缺勤周期表
       this.$http({
@@ -940,7 +937,7 @@ export default {
         }
       });
     },
-    drawAbsentChar(xAxisData, seriesData) {
+    drawAbsentChar (xAxisData, seriesData) {
       var option = {
         color: ["#ffffff"],
         xAxis: {
@@ -1026,7 +1023,7 @@ export default {
         this.absent.resize();
       });
     },
-    getMissed(flag) {
+    getMissed (flag) {
       this.active4 = flag;
       //漏检周期
       this.$http({
@@ -1048,7 +1045,7 @@ export default {
         }
       });
     },
-    drawMissChar(xAxisData, seriesData) {
+    drawMissChar (xAxisData, seriesData) {
       var option = {
         color: ["#ffffff"],
         xAxis: {
@@ -1149,6 +1146,7 @@ export default {
   position: relative;
   width: 100%;
   height: 100%;
+  min-height: 100vh;
   top: 0;
   left: 0;
   overflow-y: auto;

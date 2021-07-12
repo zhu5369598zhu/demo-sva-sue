@@ -5,8 +5,6 @@
       <el-menu :default-active="menuActiveName || 'home'"
                :collapse="sidebarFold"
                :collapseTransition="false"
-               text-color="#fff"
-               active-text-color="#548cb7"
                class="site-sidebar__menu">
         <sub-menu v-for="menu in menuList"
                   :key="menu.menuId"
