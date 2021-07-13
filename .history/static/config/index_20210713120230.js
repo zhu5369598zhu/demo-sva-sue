@@ -5,7 +5,7 @@
   window.SITE_CONFIG = {};
 
   // api接口请求地址
-   window.SITE_CONFIG['baseUrl'] = 'http://localhost:8080/sva';
+   window.SITE_CONFIG['baseUrl'] = 'http://localhost:9000/sva';
   // window.SITE_CONFIG['baseUrl'] = 'http://api.gronhco.cn/sva';
   // window.SITE_CONFIG['baseUrl'] = 'http://152.32.172.3:8080/sva';
   // cdn地址 = 域名 + 版本号

@@ -1,6 +1,6 @@
 <!--  -->
 <template>
-  <div class="box" @scroll="scrollGet($event)">
+  <div class="box">
     <div class="nav">
       <div class="change-type">
         <div class="type-left" :class="+'' + menuC ? 'showListType' : ' '">

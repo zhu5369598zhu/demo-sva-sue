@@ -1,6 +1,6 @@
 <!--  -->
 <template>
-  <div class="box" @scroll="scrollGet($event)">
+  <div class="box">
     <div class="nav">
       <div class="change-type">
         <div class="type-left" :class="+'' + menuC ? 'showListType' : ' '">
@@ -20,7 +20,7 @@
         </div>
       </div>
     </div>
-    <!-- <div class="head">
+    <div class="head">
       <div class="logo_box">
         <img src="~@/assets/img/logo.png" alt="" />
       </div>
@@ -60,10 +60,10 @@
           </el-dropdown-menu>
         </el-dropdown>
       </div>
-    </div> -->
+    </div>
 
     <div class="main">
-      <div class="panel_box" :class="sTop?'fixed':''">
+      <div class="panel_box">
         <div class="data_item">
           <div class="tit">设备总数</div>
           <div class="data">
@@ -79,7 +79,7 @@
           </div>
         </div>
       </div>
-      <div class="work_box" :class="sTop?'fixed':''">
+      <div class="work_box">
         <div class="work_order">
           <div class="work_title">
             <img src="~@static/static/icon.png" alt="" /> <span>工单列表</span>
@@ -409,7 +409,6 @@ export default {
       orderConfirmCount: "", //待审核工单
       defectiveCount: "", //填报缺陷
       inspectionExceptionCount: "", //巡检异常
-      sTop:true
     };
   },
   created() {
@@ -477,14 +476,6 @@ export default {
   },
 
   methods: {
-    scrollGet (e) {//滚动
-      // console.log(e.srcElement.scrollTop, e.target.scrollTop)
-      if (e.srcElement.scrollTop > 60) {
-        this.sTop = false
-      } else {
-        this.sTop = true
-      }
-    },
     updatePasswordHandle() {
       this.updatePassowrdVisible = true;
       this.$nextTick(() => {
@@ -1415,9 +1406,6 @@ export default {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    &.fixed {
-      z-index: 980;
-    }
 
     .data_item {
       width: 2.575rem;
@@ -1452,9 +1440,6 @@ export default {
     right: 0;
     width: 6.75rem;
     padding: 0.25rem;
-    &.fixed {
-      z-index: 980;
-    }
   }
   .work_order {
     margin-bottom: 0.25rem;

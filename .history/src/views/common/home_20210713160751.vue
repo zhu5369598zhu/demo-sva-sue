@@ -1,6 +1,6 @@
 <!--  -->
 <template>
-  <div class="box" @scroll="scrollGet($event)">
+  <div class="box">
     <div class="nav">
       <div class="change-type">
         <div class="type-left" :class="+'' + menuC ? 'showListType' : ' '">
@@ -409,7 +409,7 @@ export default {
       orderConfirmCount: "", //待审核工单
       defectiveCount: "", //填报缺陷
       inspectionExceptionCount: "", //巡检异常
-      sTop:true
+      sTop:''
     };
   },
   created() {
@@ -477,14 +477,6 @@ export default {
   },
 
   methods: {
-    scrollGet (e) {//滚动
-      // console.log(e.srcElement.scrollTop, e.target.scrollTop)
-      if (e.srcElement.scrollTop > 60) {
-        this.sTop = false
-      } else {
-        this.sTop = true
-      }
-    },
     updatePasswordHandle() {
       this.updatePassowrdVisible = true;
       this.$nextTick(() => {

@@ -1,6 +1,5 @@
 <template>
-  <div class="header">
-    <div class="bg"></div>
+  <div class="box">
     <div class="head">
       <div class="logo_box"
            @click="$router.push({ name: 'home' })">
@@ -13,15 +12,15 @@
         <div class="screen_btn"
              @click="$router.push({ name: 'home' })">首页</div>
         <div class="screen_btn"
-              @click="linkWork('inspection-inspectionline')">智能巡检</div>
+             @click="screenShow()">智能巡检</div>
         <div class="screen_btn"
-             @click="">无线检测</div>
+             @click="screenShow()">无线检测</div>
       </div>
       <div class="head_btn_r">
         <div class="screen_btn"
-             @click="linkWork('inspection-Inventoryplanning')">资产盘点</div>
+             @click="screenShow()">资产盘点</div>
         <div class="screen_btn"
-             @click="">设备润滑</div>
+             @click="screenShow()">设备润滑</div>
         <div class="screen_btn"
              @click="screenShow()">全屏切换</div>
       </div>
@@ -274,11 +273,6 @@ export default {
         this.$refs.updatePassowrd.init();
       });
     },
-
-     linkWork(router) {
-      this.$router.push({ name: router });
-    },
-
     // 退出
     logoutHandle () {
       this.$confirm(`确定进行[退出]操作?`, "提示", {
@@ -334,32 +328,20 @@ export default {
 </script>
  
 <style lang="scss">
-.header {
+.box {
   position: fixed;
-  // background: #04233c;
-  background: url(~@static/static/bg.png) no-repeat top center;
-  background-size: 100% auto;
+  background: #04233c;
   width: 100%;
   height: 1.875rem;
   z-index: 920;
   // margin-top: 20px;
-  .bg {
-    height: 1.875rem;
-    background: url(~@static/static/bt.png) no-repeat center center;
-    background-size: 90% auto;
-    width: 100%;
-    position: absolute;
-    left: 0;
-    top: 0;
-  }
 }
 .head {
   position: relative;
   width: 100%;
-  height: 0.875rem;
-  z-index: 925;
-  // background: url(~@static/static/bt.png) no-repeat center center;
-  // background-size: 90% auto;
+  height: 1.875rem;
+  background: url(~@static/static/bt.png) no-repeat center center;
+  background-size: 90% auto;
   .logo_box {
     top: -8px;
     left: 0;

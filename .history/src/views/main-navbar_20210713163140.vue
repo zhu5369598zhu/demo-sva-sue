@@ -13,13 +13,13 @@
         <div class="screen_btn"
              @click="$router.push({ name: 'home' })">首页</div>
         <div class="screen_btn"
-              @click="linkWork('inspection-inspectionline')">智能巡检</div>
+              @click="linkWork('management-ordermanagementalready')">智能巡检</div>
         <div class="screen_btn"
              @click="">无线检测</div>
       </div>
       <div class="head_btn_r">
         <div class="screen_btn"
-             @click="linkWork('inspection-Inventoryplanning')">资产盘点</div>
+             @click="linkWork('management-ordermanagementalready')">资产盘点</div>
         <div class="screen_btn"
              @click="">设备润滑</div>
         <div class="screen_btn"
