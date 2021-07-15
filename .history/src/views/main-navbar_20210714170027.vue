@@ -15,9 +15,8 @@
         <div class="screen_btn"
               @click="linkWork('inspection-inspectionline')">智能巡检</div>
         <div class="screen_btn"
-              @click="linkWork('inspection-formsa')">无线检测</div>
-        <div class="screen_btn"
-                      @click="linkWork('inspection-forms')">智能报表
+             @click="">无线检测</div>
+        <div class="screen_btn">智能报表
           </div>    
       </div>
       <div class="head_btn_r">

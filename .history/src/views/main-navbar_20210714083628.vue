@@ -15,10 +15,7 @@
         <div class="screen_btn"
               @click="linkWork('inspection-inspectionline')">智能巡检</div>
         <div class="screen_btn"
-              @click="linkWork('inspection-formsa')">无线检测</div>
-        <div class="screen_btn"
-                      @click="linkWork('inspection-forms')">智能报表
-          </div>    
+             @click="">无线检测</div>
       </div>
       <div class="head_btn_r">
         <div class="screen_btn"
@@ -397,7 +394,7 @@ export default {
     .ld_box {
       width: 30px;
       height: 30px;
-      left: 15px;
+      left: 30px;
       display: inline-block;
       position: relative;
       margin-right: 25px;
