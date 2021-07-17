@@ -147,20 +147,6 @@
       margin: 20px 110px 0px 0px;
       color: #fff;
     }
-
-     .custom-logo {
-      height:150px;
-      width:100%;
-    }
-      .custom-logo img  {
-        position: absolute;
-        display:block;
-        max-width: 20%;
-        max-height: 20%;
-        top:75px;
-        right: 100px;
-        z-index:1;
-    }
     .brand-info__text {
       margin:  0 0 22px 0;
       font-size: 36px;

@@ -38,7 +38,19 @@ const mainRoutes = {
     { path: '/demo-user', component: _import('modules/sys/user'), name: 'demo-user', meta: { title: 'demo-user', isTab: true } },
     { path: '/demo-echarts', component: _import('demo/echarts'), name: 'demo-echarts', meta: { title: 'demo-echarts', isTab: true } },
     { path: '/demo-ueditor', component: _import('demo/ueditor'), name: 'demo-ueditor', meta: { title: 'demo-ueditor', isTab: true } },
-    
+    { path: '/theme', component: _import('common/theme'), name: 'theme', meta: { title: '主题' } },
+    { path: '/demo-user', component: _import('modules/sys/user'), name: 'demo-user', meta: { title: 'demo-user', isTab: true } },
+    { path: '/demo-echarts', component: _import('demo/echarts'), name: 'demo-echarts', meta: { title: 'demo-echarts', isTab: true } },
+    { path: '/demo-ueditor', component: _import('demo/ueditor'), name: 'demo-ueditor', meta: { title: 'demo-ueditor', isTab: true } },
+    { path: '/Sensor-detailed', component: _import('Online/Sensor-detailed'), name: 'Sensor-detailed', meta: { title: 'Sensor-detailed', isTab: true } },
+    { path: '/gateway-detailed', component: _import('Online/gateway-details'), name: 'gateway-detailed', meta: { title: 'gateway-detailed', isTab: true } },
+    { path: '/calcinerDetail0', component: _import('modules/olmonitoring/calcinerDetail0'), name: 'calcinerDetail0', meta: { title: '1#煅烧炉', isTab: true } },
+    { path: '/calcinerDetail1', component: _import('modules/olmonitoring/calcinerDetail1'), name: 'calcinerDetail1', meta: { title: '2#煅烧炉', isTab: true } },
+    { path: '/calcinerDetail2', component: _import('modules/olmonitoring/calcinerDetail2'), name: 'calcinerDetail2', meta: { title: '3#煅烧炉', isTab: true } },
+    { path: '/calcinerDetail3', component: _import('modules/olmonitoring/calcinerDetail3'), name: 'calcinerDetail3', meta: { title: '4#煅烧炉', isTab: true } },
+    { path: '/calcinerDetail4', component: _import('modules/olmonitoring/calcinerDetail4'), name: 'calcinerDetail4', meta: { title: '5#煅烧炉', isTab: true } },
+    { path: '/statusDetail', component: _import('modules/olmonitoring/statusDetail'), name: 'statusDetail', meta: { title: 'statusDetail', isTab: true } },
+    { path: '/belt', component: _import('modules/olmonitoring/belt'), name: 'belt', meta: { title: 'belt', isTab: true } }
   ],
   beforeEnter(to, from, next) {
     let token = Vue.cookie.get('token')
